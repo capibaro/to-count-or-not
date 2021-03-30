@@ -8,13 +8,13 @@ import java.util.List;
 public interface BillMapper {
     String getMonthIncomeByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
 
-    String getMonthOutcomeByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
+    String getMonthExpenseByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
 
-    List<String> selectAccountsDateByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
+    List<String> getBillDateByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
 
-    List<Bill> selectAccountsByUserIdWithDate(Long user_id, String date);
+    List<Bill> getBillByUserIdWithDate(Long user_id, String date);
 
     String getDayIncomeByUserIdWithDate(Long user_id, String date);
 
-    String getDayOutcomeByUserIdWithDate(Long user_id, String date);
+    String getDayExpenseByUserIdWithDate(Long user_id, String date);
 }

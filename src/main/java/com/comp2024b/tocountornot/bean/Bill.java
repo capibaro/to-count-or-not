@@ -17,87 +17,87 @@ public class Bill {
         return id;
     }
 
-    public String getFirst() {
-        return first;
-    }
-
-    public String getSecond() {
-        return second;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getCard() {
-        return card;
-    }
-
-    public String getMember() {
-        return member;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getDate_year() {
-        return date_year;
-    }
-
-    public String getDate_month() {
-        return date_month;
-    }
-
-    public String getDate_week() {
-        return date_week;
-    }
-
-    public String getIn_or_out() {
-        return in_or_out;
-    }
-
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getFirst() {
+        return first;
     }
 
     public void setFirst(String first) {
         this.first = first;
     }
 
+    public String getSecond() {
+        return second;
+    }
+
     public void setSecond(String second) {
         this.second = second;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
 
+    public String getCard() {
+        return card;
+    }
+
     public void setCard(String card) {
         this.card = card;
+    }
+
+    public String getMember() {
+        return member;
     }
 
     public void setMember(String member) {
         this.member = member;
     }
 
+    public String getDate() {
+        return date;
+    }
+
     public void setDate(String date) {
         this.date = date;
     }
 
-    public void setDate_year(String date_year) {
+    public String getDateYear() {
+        return date_year;
+    }
+
+    public void setDateYear(String date_year) {
         this.date_year = date_year;
     }
 
-    public void setDate_month(String date_month) {
+    public String getDateMonth() {
+        return date_month;
+    }
+
+    public void setDateMonth(String date_month) {
         this.date_month = date_month;
     }
 
-    public void setDate_week(String date_week) {
+    public String getDateWeek() {
+        return date_week;
+    }
+
+    public void setDateWeek(String date_week) {
         this.date_week = date_week;
     }
 
-    public void setIn_or_out(String in_or_out) {
+    public String getInOrOut() {
+        return in_or_out;
+    }
+
+    public void setInOrOut(String in_or_out) {
         this.in_or_out = in_or_out;
     }
 }

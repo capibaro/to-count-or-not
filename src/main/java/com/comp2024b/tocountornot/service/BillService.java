@@ -17,23 +17,23 @@ public class BillService {
         return billMapper.getMonthIncomeByUserIdWithYearMonth(user_id, date_year, date_month);
     }
 
-    public String getMonthOutcomeByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
-        return billMapper.getMonthOutcomeByUserIdWithYearMonth(user_id, date_year, date_month);
+    public String getMonthExpenseByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
+        return billMapper.getMonthExpenseByUserIdWithYearMonth(user_id, date_year, date_month);
     }
 
-    public List<String> selectAccountsDateByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
-        return billMapper.selectAccountsDateByUserIdWithYearMonth(user_id, date_year, date_month);
+    public List<String> getBillDateByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
+        return billMapper.getBillDateByUserIdWithYearMonth(user_id, date_year, date_month);
     }
 
-    public List<Bill> selectAccountsByUserIdWithDate(Long user_id, String date) {
-        return billMapper.selectAccountsByUserIdWithDate(user_id, date);
+    public List<Bill> getBillByUserIdWithDate(Long user_id, String date) {
+        return billMapper.getBillByUserIdWithDate(user_id, date);
     }
 
     public String getDayIncomeByUserIdWithDate(Long user_id, String date) {
         return billMapper.getDayIncomeByUserIdWithDate(user_id, date);
     }
 
-    public String getDayOutcomeByUserIdWithDate(Long user_id, String date) {
-        return billMapper.getDayOutcomeByUserIdWithDate(user_id, date);
+    public String getDayExpenseByUserIdWithDate(Long user_id, String date) {
+        return billMapper.getDayExpenseByUserIdWithDate(user_id, date);
     }
 }

@@ -1,15 +1,8 @@
 package com.comp2024b.tocountornot.bean;
 
-public class Base {
+public class Msg {
 
-    /**
-     * status : 100
-     * message : 处理成功！
-     */
-
-    //状态码   100-成功    200-失败
     private int status;
-    //提示信息
     private String message;
 
     public int getStatus() {
@@ -28,31 +21,32 @@ public class Base {
         this.message = message;
     }
 
-    public void setSuccess(){
-        status=100;
-        message="处理成功！";
-    }
-    public void setFail(){
-        status=200;
-        message="处理失败！";
+    public void setSuccess() {
+        status = 100;
+        message = "Success ";
     }
 
-    public void setFail(String msg){
-        status=200;
-        message=msg;
+    public void setFail() {
+        status = 200;
+        message = "Fail ";
     }
 
-    public Base success(){
+    public void setFail(String msg) {
+        status = 200;
+        message = msg;
+    }
+
+    public Msg success() {
         setSuccess();
         return this;
     }
 
-    public Base fail(){
+    public Msg fail() {
         setFail();
         return this;
     }
 
-    public Base fail(String msg){
+    public Msg fail(String msg) {
         setFail(msg);
         return this;
     }

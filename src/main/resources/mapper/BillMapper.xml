@@ -6,17 +6,17 @@
         from bill
         where user_id = #{user_id} and date_year = #{date_year} and date_month = #{date_month} and in_or_out = 'in'
     </select>
-    <select id="getMonthOutcomeByUserIdWithYearMonth" resultType="java.lang.String">
+    <select id="getMonthExpenseByUserIdWithYearMonth" resultType="java.lang.String">
         select sum(price)
         from bill
         where user_id = #{user_id} and date_year = #{date_year} and date_month = #{date_month} and in_or_out = 'out'
     </select>
-    <select id="selectAccountsDateByUserIdWithYearMonth" resultType="java.lang.String">
+    <select id="getBillDateByUserIdWithYearMonth" resultType="java.lang.String">
         select `date`
         from bill
         where user_id = #{user_id} and date_year = #{date_year} and date_month = #{date_month} group by `date` order by `date` desc
     </select>
-    <select id="selectAccountsByUserIdWithDate" resultType="com.comp2024b.tocountornot.bean.Bill">
+    <select id="getBillByUserIdWithDate" resultType="com.comp2024b.tocountornot.bean.Bill">
         select *
         from bill
         where user_id = #{user_id} and `date` = #{date}
@@ -26,7 +26,7 @@
         from bill
         where user_id = #{user_id} and `date` = #{date} and in_or_out = 'in'
     </select>
-    <select id="getDayOutcomeByUserIdWithDate" resultType="java.lang.String">
+    <select id="getDayExpenseByUserIdWithDate" resultType="java.lang.String">
         select sum(price)
         from bill
         where user_id = #{user_id} and `date` = #{date} and in_or_out = 'out'
