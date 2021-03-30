@@ -2,11 +2,11 @@ package com.comp2024b.tocountornot.bean;
 
 import java.util.List;
 
-public class MonthBillMsg extends Msg {
+public class MonthStats {
 
     private String income;
     private String expense;
-    private List<DayBillMsg> bill_list;
+    private List<DayStats> bill_list;
 
     public String getIncome() {
         return income;
@@ -24,15 +24,15 @@ public class MonthBillMsg extends Msg {
         this.expense = expense;
     }
 
-    public List<DayBillMsg> getBill_list() {
+    public List<DayStats> getBill_list() {
         return bill_list;
     }
 
-    public void setBillList(List<DayBillMsg> bill_list) {
+    public void setBillList(List<DayStats> bill_list) {
         this.bill_list = bill_list;
     }
 
-    public static class DayBillMsg {
+    public static class DayStats {
 
         private String date;
         private String income;
