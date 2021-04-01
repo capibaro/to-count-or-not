@@ -1,12 +1,11 @@
 package com.comp2024b.tocountornot.controller;
 
-import com.comp2024b.tocountornot.bean.Bill;
-import com.comp2024b.tocountornot.bean.MonthStats;
+import com.comp2024b.tocountornot.bean.*;
 import com.comp2024b.tocountornot.service.BillService;
 import com.comp2024b.tocountornot.service.StatsService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -24,43 +23,47 @@ public class StatsController {
         this.billService = billService;
     }
 
-    @RequestMapping("/card/income/{user_id}/{name}")
-    @ResponseBody
-    public String getCardIncomeByUserIdWithName(@PathVariable("user_id") Long user_id,
-                                                @PathVariable("name") String name) {
-        return statsService.getCardIncomeByUserIdWithName(user_id, name);
+    @GetMapping("user/all")
+    public Result getAllUser() {
+        List<User> list = statsService.getAllUser();
+        return Results.getSuccessResult(list);
     }
 
-    @RequestMapping("/card/expense/{user_id}/{name}")
-    @ResponseBody
-    public String getCardExpenseByUserIdWithName(@PathVariable("user_id") Long user_id,
-                                                 @PathVariable("name") String name) {
-        return statsService.getCardExpenseByUserIdWithName(user_id, name);
+    @GetMapping("card/{uid}")
+    public Result getAllCardByUserId(@PathVariable("uid") Long uid) {
+        List<Card> list = statsService.getAllCardByUserId(uid);
+        return Results.getSuccessResult(list);
     }
 
-    @RequestMapping("/flow/{user_id}/{date_year}/{date_month}")
-    @ResponseBody
-    public MonthStats getMonthBillMsgByUserIdWithYearMonth(@PathVariable("user_id") Long user_id,
-                                                           @PathVariable("date_year") String date_year,
-                                                           @PathVariable("date_month") String date_month) {
+    @GetMapping("/bill/{uid}/{date}")
+    public Result getBillByUserIdWithDate(@PathVariable("uid") Long uid,
+                                          @PathVariable("date") String date) {
+        List<Bill> list = statsService.getBillByUserIdWithDate(uid, date);
+        return Results.getSuccessResult(list);
+    }
+
+    @GetMapping("/flow/{uid}/{year}/{month}")
+    public Result getMonthStatsByUserIdWithYearMonth(@PathVariable("uid") Long uid,
+                                                         @PathVariable("year") String year,
+                                                         @PathVariable("month") String month) {
         MonthStats monthStats = new MonthStats();
-        monthStats.setIncome(statsService.getMonthIncomeByUserIdWithYearMonth(user_id, date_year, date_month));
-        monthStats.setExpense(statsService.getMonthExpenseByUserIdWithYearMonth(user_id, date_year, date_month));
+        monthStats.setIncome(statsService.getMonthIncomeByUserIdWithYearMonth(uid, year, month));
+        monthStats.setExpense(statsService.getMonthExpenseByUserIdWithYearMonth(uid, year, month));
 
-        List<MonthStats.DayStats> day_bill_list = new ArrayList<>();
-        List<String> date_list = statsService.getBillDateByUserIdWithYearMonth(user_id, date_year, date_month);
+        List<DayStats> bill_list = new ArrayList<>();
 
+        List<String> date_list = statsService.getBillDateByUserIdWithYearMonth(uid, year, month);
         for (String date : date_list) {
-            MonthStats.DayStats dayStats = new MonthStats.DayStats();
+            DayStats dayStats = new DayStats();
             dayStats.setDate(date);
-            dayStats.setIncome(statsService.getDayIncomeByUserIdWithDate(user_id, date));
-            dayStats.setExpense(statsService.getDayExpenseByUserIdWithDate(user_id, date));
-            List<Bill> bill_list = billService.getBillByUserIdWithDate(user_id, date);
-            dayStats.setBillList(bill_list);
-            day_bill_list.add(dayStats);
+            dayStats.setIncome(statsService.getDayIncomeByUserIdWithDate(uid, date));
+            dayStats.setExpense(statsService.getDayExpenseByUserIdWithDate(uid, date));
+            List<Bill> list = statsService.getBillByUserIdWithDate(uid, date);
+            dayStats.setList(list);
+            bill_list.add(dayStats);
         }
 
-        monthStats.setBillList(day_bill_list);
-        return monthStats;
+        monthStats.setList(bill_list);
+        return Results.getSuccessResult(monthStats);
     }
 }

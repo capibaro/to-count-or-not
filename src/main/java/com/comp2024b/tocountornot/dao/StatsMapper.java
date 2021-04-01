@@ -1,22 +1,33 @@
 package com.comp2024b.tocountornot.dao;
 
+import com.comp2024b.tocountornot.bean.Bill;
+import com.comp2024b.tocountornot.bean.Card;
+import com.comp2024b.tocountornot.bean.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 @Mapper
 public interface StatsMapper {
-    String getMonthIncomeByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
+    String getMonthIncomeByUserIdWithYearMonth(Long uid, String year, String month);
 
-    String getMonthExpenseByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
+    String getMonthExpenseByUserIdWithYearMonth(Long uid, String year, String month);
 
-    List<String> getBillDateByUserIdWithYearMonth(Long user_id, String date_year, String date_month);
+    List<String> getBillDateByUserIdWithYearMonth(Long uid, String year, String month);
 
-    String getDayIncomeByUserIdWithDate(Long user_id, String date);
+    String getDayIncomeByUserIdWithDate(Long uid, String date);
 
-    String getDayExpenseByUserIdWithDate(Long user_id, String date);
+    String getDayExpenseByUserIdWithDate(Long uid, String date);
 
-    String getCardIncomeByUserIdWithName(Long user_id, String name);
+    String getCardIncomeByUserIdWithName(Long uid, String name);
 
-    String getCardExpenseByUserIdWithName(Long user_id, String name);
+    String getCardExpenseByUserIdWithName(Long uid, String name);
+
+    @Select("select * from user")
+    List<User> getAllUser();
+
+    List<Bill> getBillByUserIdWithDate(Long uid, String date);
+
+    List<Card> getAllCardByUserId(Long uid);
 }

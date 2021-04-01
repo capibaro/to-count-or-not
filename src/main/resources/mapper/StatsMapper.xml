@@ -4,36 +4,46 @@
     <select id="getDayIncomeByUserIdWithDate" resultType="java.lang.String">
         select sum(price)
         from bill
-        where user_id = #{user_id} and `date` = #{date} and in_or_out = 'in'
+        where uid = #{uid} and `date` = #{date} and type = 'in'
     </select>
     <select id="getDayExpenseByUserIdWithDate" resultType="java.lang.String">
         select sum(price)
         from bill
-        where user_id = #{user_id} and `date` = #{date} and in_or_out = 'out'
+        where uid = #{uid} and `date` = #{date} and type = 'out'
     </select>
     <select id="getMonthIncomeByUserIdWithYearMonth" resultType="java.lang.String">
         select sum(price)
         from bill
-        where user_id = #{user_id} and date_year = #{date_year} and date_month = #{date_month} and in_or_out = 'in'
+        where uid = #{uid} and year = #{year} and month = #{month} and type = 'in'
     </select>
     <select id="getMonthExpenseByUserIdWithYearMonth" resultType="java.lang.String">
         select sum(price)
         from bill
-        where user_id = #{user_id} and date_year = #{date_year} and date_month = #{date_month} and in_or_out = 'out'
+        where uid = #{uid} and year = #{year} and month = #{month} and type = 'out'
     </select>
     <select id="getBillDateByUserIdWithYearMonth" resultType="java.lang.String">
         select `date`
         from bill
-        where user_id = #{user_id} and date_year = #{date_year} and date_month = #{date_month} group by `date` order by `date` desc
+        where uid = #{uid} and year = #{year} and month = #{month} group by `date` order by `date` desc
     </select>
     <select id="getCardIncomeByUserIdWithName" resultType="java.lang.String">
         select sum(income)
         from card
-        where user_id = #{user_id} and name = #{name};
+        where uid = #{uid} and name = #{name};
     </select>
     <select id="getCardExpenseByUserIdWithName" resultType="java.lang.String" >
         select sum(expense)
         from card
-        where user_id = #{user_id} and name = #{name};
+        where uid = #{uid} and name = #{name};
+    </select>
+    <select id="getAllCardByUserId" resultType="com.comp2024b.tocountornot.bean.Card" >
+        select *
+        from card
+        where uid = #{uid};
+    </select>
+    <select id="getBillByUserIdWithDate" resultType="com.comp2024b.tocountornot.bean.Bill">
+        select *
+        from bill
+        where uid = #{uid} and `date` = #{date}
     </select>
 </mapper>

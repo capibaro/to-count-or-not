@@ -1,13 +1,10 @@
 package com.comp2024b.tocountornot.controller;
 
 import com.comp2024b.tocountornot.bean.Card;
+import com.comp2024b.tocountornot.bean.Result;
+import com.comp2024b.tocountornot.bean.Results;
 import com.comp2024b.tocountornot.service.CardService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("card")
@@ -19,9 +16,41 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @RequestMapping("{user_id}")
-    @ResponseBody
-    public List<Card> getAllCardByUserId(@PathVariable("user_id") Long user_id) {
-        return cardService.getAllCardByUserId(user_id);
+    @GetMapping("{id}")
+    public Result selectCardById(@PathVariable("id") int id) {
+        Card card = cardService.selectCardById(id);
+        return Results.getSuccessResult(card);
+    }
+
+    @PostMapping("insert")
+    public Result insertCard(@RequestBody Card card) {
+        try {
+            cardService.insertCard(card.getId(), card.getName(), card.getNote(), card.getImage(),
+                    card.getIncome(), card.getExpense(), card.getBalance(), card.getUid());
+        } catch (Exception e) {
+            return Results.getFailResult(e.getMessage());
+        }
+        return Results.getSuccessResult();
+    }
+
+    @PutMapping("update/{id}")
+    public Result updateCard(@RequestBody Card card) {
+        try {
+            cardService.updateCard(card.getName(), card.getNote(), card.getImage(), card.getIncome(),
+                    card.getExpense(), card.getBalance(), card.getUid(), card.getId());
+        } catch (Exception e) {
+            return Results.getFailResult(e.getMessage());
+        }
+        return Results.getSuccessResult();
+    }
+
+    @DeleteMapping("delete/{id}")
+    public Result deleteCard(@PathVariable("id") int id) {
+        try {
+            cardService.deleteCard(id);
+        } catch (Exception e) {
+            return Results.getFailResult(e.getMessage());
+        }
+        return Results.getSuccessResult();
     }
 }

@@ -1,5 +1,6 @@
 package com.comp2024b.tocountornot.service;
 
+import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.dao.CardMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -14,11 +15,21 @@ public class CardService {
         this.cardMapper = cardMapper;
     }
 
-    public List<Card> getAllCardByUserId(Long user_id) {
-        return cardMapper.getAllCardByUserId(user_id);
+    public Card selectCardById(int id) {
+        return cardMapper.selectCardById(id);
     }
 
-    public int deleteCardByUserIdWithName(Long user_id, String name) {
-        return cardMapper.deleteCardByUserIdWithName(user_id, name);
+    public void insertCard(int id, String name, String note, int image,
+                           double income, double expense, double balance, Long uid) {
+        cardMapper.insertCard(id, name, note, image, income, expense, balance, uid);
+    }
+
+    public void updateCard(String name, String note, int image, double income,
+                           double expense, double balance, Long uid, int id) {
+        cardMapper.updateCard(name, note, image, income, expense, balance, uid, id);
+    }
+
+    public void deleteCard(int id) {
+        cardMapper.deleteCard(id);
     }
 }

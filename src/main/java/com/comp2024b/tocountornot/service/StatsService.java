@@ -1,5 +1,8 @@
 package com.comp2024b.tocountornot.service;
 
+import com.comp2024b.tocountornot.bean.Bill;
+import com.comp2024b.tocountornot.bean.Card;
+import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.dao.StatsMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,30 +16,42 @@ public class StatsService {
         this.statsMapper = statsMapper;
     }
 
-    public String getMonthIncomeByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
-        return statsMapper.getMonthIncomeByUserIdWithYearMonth(user_id, date_year, date_month);
+    public String getMonthIncomeByUserIdWithYearMonth(Long uid, String year, String month) {
+        return statsMapper.getMonthIncomeByUserIdWithYearMonth(uid, year, month);
     }
 
-    public String getMonthExpenseByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
-        return statsMapper.getMonthExpenseByUserIdWithYearMonth(user_id, date_year, date_month);
+    public List<User> getAllUser() {
+        return statsMapper.getAllUser();
     }
 
-    public List<String> getBillDateByUserIdWithYearMonth(Long user_id, String date_year, String date_month) {
-        return statsMapper.getBillDateByUserIdWithYearMonth(user_id, date_year, date_month);
+    public String getMonthExpenseByUserIdWithYearMonth(Long uid, String year, String month) {
+        return statsMapper.getMonthExpenseByUserIdWithYearMonth(uid, year, month);
     }
 
-    public String getDayIncomeByUserIdWithDate(Long user_id, String date) {
-        return statsMapper.getDayIncomeByUserIdWithDate(user_id, date);
+    public List<String> getBillDateByUserIdWithYearMonth(Long uid, String year, String month) {
+        return statsMapper.getBillDateByUserIdWithYearMonth(uid, year, month);
     }
 
-    public String getDayExpenseByUserIdWithDate(Long user_id, String date) {
-        return statsMapper.getDayExpenseByUserIdWithDate(user_id, date);
+    public String getDayIncomeByUserIdWithDate(Long uid, String date) {
+        return statsMapper.getDayIncomeByUserIdWithDate(uid, date);
     }
 
-    public String getCardIncomeByUserIdWithName(Long user_id, String name) {
-        return statsMapper.getCardIncomeByUserIdWithName(user_id, name);
+    public String getDayExpenseByUserIdWithDate(Long uid, String date) {
+        return statsMapper.getDayExpenseByUserIdWithDate(uid, date);
     }
-    public String getCardExpenseByUserIdWithName(Long user_id, String name) {
-        return statsMapper.getCardExpenseByUserIdWithName(user_id, name);
+
+    public String getCardIncomeByUserIdWithName(Long uid, String name) {
+        return statsMapper.getCardIncomeByUserIdWithName(uid, name);
     }
+    public String getCardExpenseByUserIdWithName(Long uid, String name) {
+        return statsMapper.getCardExpenseByUserIdWithName(uid, name);
+    }
+
+    public List<Bill> getBillByUserIdWithDate(Long uid, String date) {
+        return statsMapper.getBillByUserIdWithDate(uid, date);
+    }
+    public List<Card> getAllCardByUserId(Long uid) {
+        return statsMapper.getAllCardByUserId(uid);
+    }
+
 }

@@ -1,15 +1,23 @@
 package com.comp2024b.tocountornot.dao;
 
 import com.comp2024b.tocountornot.bean.Card;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface CardMapper {
-    List<Card> getCardByUserIdWithName(Long user_id, String name);
+    @Select("select * from card where id = #{id}")
+    Card selectCardById(@Param("id") int id);
 
-    List<Card> getAllCardByUserId(Long user_id);
+    @Insert("insert into card values(#{id},#{name},#{note},#{image},#{income},#{expense},#{balance},#{uid})")
+    void insertCard(@Param("id") int id, @Param("name") String name, @Param("note") String note,
+                    @Param("image") int image, @Param("income") double income, @Param("expense") double expense,
+                    @Param("balance") double balance, @Param("uid") Long uid);
 
-    int deleteCardByUserIdWithName(Long user_id, String name);
+    @Update("update card set name=#{name},note=#{note},image=#{image},income=#{income},expense=#{expense},balance=#{balance},uid=#{uid} where id=#{id}")
+    void updateCard(@Param("name") String name, @Param("note") String note,
+    @Param("image") int image, @Param("income") double income, @Param("expense") double expense,
+    @Param("balance") double balance, @Param("uid") Long uid, @Param("id") int id);
+
+    @Delete("DELETE from card where id=#{id}")
+    void deleteCard(@Param("id") int id);
 }
