@@ -1,8 +1,13 @@
 package com.comp2024b.tocountornot.controller;
 
+import com.comp2024b.tocountornot.annotation.TokenRequired;
 import com.comp2024b.tocountornot.bean.*;
 import com.comp2024b.tocountornot.service.BillService;
 import com.comp2024b.tocountornot.service.StatsService;
+import com.comp2024b.tocountornot.util.DayStats;
+import com.comp2024b.tocountornot.util.MonthStats;
+import com.comp2024b.tocountornot.util.Result;
+import com.comp2024b.tocountornot.util.Results;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,25 +28,22 @@ public class StatsController {
         this.billService = billService;
     }
 
-    @GetMapping("user/all")
-    public Result getAllUser() {
-        List<User> list = statsService.getAllUser();
-        return Results.getSuccessResult(list);
-    }
-
+    @TokenRequired
     @GetMapping("card/{uid}")
     public Result getAllCardByUserId(@PathVariable("uid") Long uid) {
         List<Card> list = statsService.getAllCardByUserId(uid);
         return Results.getSuccessResult(list);
     }
 
-    @GetMapping("/bill/{uid}/{date}")
+    @TokenRequired
+    @GetMapping("/flow/{uid}/{date}")
     public Result getBillByUserIdWithDate(@PathVariable("uid") Long uid,
                                           @PathVariable("date") String date) {
         List<Bill> list = statsService.getBillByUserIdWithDate(uid, date);
         return Results.getSuccessResult(list);
     }
 
+    @TokenRequired
     @GetMapping("/flow/{uid}/{year}/{month}")
     public Result getMonthStatsByUserIdWithYearMonth(@PathVariable("uid") Long uid,
                                                          @PathVariable("year") String year,

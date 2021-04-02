@@ -20,10 +20,6 @@ public class StatsService {
         return statsMapper.getMonthIncomeByUserIdWithYearMonth(uid, year, month);
     }
 
-    public List<User> getAllUser() {
-        return statsMapper.getAllUser();
-    }
-
     public String getMonthExpenseByUserIdWithYearMonth(Long uid, String year, String month) {
         return statsMapper.getMonthExpenseByUserIdWithYearMonth(uid, year, month);
     }

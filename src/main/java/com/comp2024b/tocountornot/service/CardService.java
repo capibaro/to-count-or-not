@@ -19,17 +19,15 @@ public class CardService {
         return cardMapper.selectCardById(id);
     }
 
-    public void insertCard(int id, String name, String note, int image,
-                           double income, double expense, double balance, Long uid) {
-        cardMapper.insertCard(id, name, note, image, income, expense, balance, uid);
-    }
-
-    public void updateCard(String name, String note, int image, double income,
-                           double expense, double balance, Long uid, int id) {
-        cardMapper.updateCard(name, note, image, income, expense, balance, uid, id);
-    }
-
     public void deleteCard(int id) {
         cardMapper.deleteCard(id);
+    }
+
+    public void insertCard(Card card) {
+        cardMapper.insertCard(card);
+    }
+
+    public void updateCard(Card card) {
+        cardMapper.updateCard(card);
     }
 }

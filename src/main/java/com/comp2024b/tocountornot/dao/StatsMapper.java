@@ -24,9 +24,6 @@ public interface StatsMapper {
 
     String getCardExpenseByUserIdWithName(Long uid, String name);
 
-    @Select("select * from user")
-    List<User> getAllUser();
-
     List<Bill> getBillByUserIdWithDate(Long uid, String date);
 
     List<Card> getAllCardByUserId(Long uid);

@@ -1,5 +1,6 @@
-package com.comp2024b.tocountornot.bean;
+package com.comp2024b.tocountornot.util;
 
+import com.comp2024b.tocountornot.util.DayStats;
 import lombok.Data;
 
 import java.util.List;

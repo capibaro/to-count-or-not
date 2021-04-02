@@ -1,8 +1,12 @@
 package com.comp2024b.tocountornot.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.dao.UserMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -12,19 +16,33 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    public List<User> getAllUser() {
+        return userMapper.getAllUser();
+    }
+
+    public User selectUserById(int id) {
+        return userMapper.selectUserById(id);
+    }
+
     public User selectUserByName(String name) {
         return userMapper.selectUserByName(name);
     }
 
-    public void insertUser(Long uid, String name, String password) {
-        userMapper.insertUser(uid, name, password);
+    public void deleteUser(int id) {
+        userMapper.deleteUser(id);
     }
 
-    public void updateUser(String name, String password, Long uid) {
-        userMapper.updateUser(name, password, uid);
+    public void insertUser(User user) {
+        userMapper.insertUser(user);
     }
 
-    public void deleteUser(Long uid) {
-        userMapper.deleteUser(uid);
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
+    public String getToken(User user) {
+        String token;
+        token = JWT.create().withAudience(user.getName()).sign(Algorithm.HMAC256(user.getPassword()));
+        return token;
     }
 }

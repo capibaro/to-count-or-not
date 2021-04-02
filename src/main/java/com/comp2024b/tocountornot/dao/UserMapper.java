@@ -3,17 +3,26 @@ package com.comp2024b.tocountornot.dao;
 import com.comp2024b.tocountornot.bean.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
+    @Select("select * from user")
+    List<User> getAllUser();
+
+    @Select("select * from user where id = #{id}")
+    User selectUserById(@Param("id") int id);
+
     @Select("select * from user where name = #{name}")
     User selectUserByName(@Param("name") String name);
 
-    @Insert("insert into user values(#{uid},#{name},#{password})")
-    void insertUser(@Param("uid") Long uid, @Param("name") String name, @Param("password") String password);
+    @Delete("delete from user where id=#{id}")
+    void deleteUser(@Param("id") int id);
 
-    @Update("update user set name=#{name},password=#{password} where uid=#{uid}")
-    void updateUser(@Param("name") String name, @Param("password") String password, @Param("uid") Long uid);
+    @Insert("insert into user values(#{id},#{name},#{password})")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    void insertUser(User user);
 
-    @Delete("delete from user where uid=#{uid}")
-    void deleteUser(@Param("uid") Long uid);
+    @Update("update user set name=#{name},password=#{password} where id=#{id}")
+    void updateUser(User user);
 }
