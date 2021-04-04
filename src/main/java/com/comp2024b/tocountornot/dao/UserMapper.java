@@ -7,12 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("select * from user")
-    List<User> getAllUser();
-
-    @Select("select * from user where id = #{id}")
-    User selectUserById(@Param("id") int id);
-
     @Select("select * from user where name = #{name}")
     User selectUserByName(@Param("name") String name);
 

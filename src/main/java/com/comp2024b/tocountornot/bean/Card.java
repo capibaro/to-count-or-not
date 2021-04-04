@@ -11,5 +11,5 @@ public class Card {
     private double income;
     private double expense;
     private double balance;
-    private Long uid;
+    private int uid;
 }

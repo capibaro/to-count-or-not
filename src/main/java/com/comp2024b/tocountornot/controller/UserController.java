@@ -8,8 +8,6 @@ import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -17,23 +15,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @NoTokenRequired
-    @PostMapping("/login")
-    public Result login(@RequestBody User user) {
-        User u = userService.selectUserByName(user.getName());
-        if (u == null) {
-            return Results.getFailResult("User does not exist");
-        } else {
-            if (!u.getPassword().equals(user.getPassword())) {
-                return Results.getFailResult("Wrong password");
-            }
-            else {
-                String token = userService.getToken(u);
-                return Results.getSuccessResult(token);
-            }
-        }
     }
 
     @NoTokenRequired
@@ -45,42 +26,58 @@ public class UserController {
         }
         else {
             userService.insertUser(user);
-            return Results.getSuccessResult(user.getId());
+            return Results.getSuccessResult();
+        }
+    }
+
+    @NoTokenRequired
+    @PostMapping("login")
+    public Result login(@RequestBody User user) {
+        User u = userService.selectUserByName(user.getName());
+        if (u == null) {
+            return Results.getFailResult("User does not exist");
+        } else {
+            if (!u.getPassword().equals(user.getPassword())) {
+                return Results.getFailResult("Wrong password, login failed");
+            }
+            else {
+                String token = userService.getUserToken(u);
+                return Results.getSuccessResult(token);
+            }
         }
     }
 
     @TokenRequired
-    @GetMapping("all")
-    public Result getAllUser() {
-        List<User> list = userService.getAllUser();
-        return Results.getSuccessResult(list);
-    }
-
-    @TokenRequired
-    @GetMapping("{id}")
-    public Result selectUserById(@PathVariable("id") int id) {
-        User user = userService.selectUserById(id);
-        return Results.getSuccessResult(user);
-    }
-
-    @TokenRequired
-    @DeleteMapping("delete/{id}")
-    public Result deleteUser(@PathVariable("id") int id) {
-        userService.deleteUser(id);
-        return Results.getSuccessResult(id);
-    }
-
-    @TokenRequired
-    @PostMapping("insert")
-    public Result insertUser(@RequestBody User user) {
-        userService.insertUser(user);
-        return Results.getSuccessResult(user.getId());
+    @DeleteMapping("delete")
+    public Result deleteUser(@RequestBody User user) {
+        User u = userService.selectUserByName(user.getName());
+        if (u == null) {
+            return Results.getNotFoundResult("User does not exist");
+        } else {
+            if (!u.getPassword().equals(user.getPassword())) {
+                return Results.getFailResult("Wrong password, delete failed");
+            }
+            else {
+                userService.deleteUser(u.getId());
+                return Results.getSuccessResult();
+            }
+        }
     }
 
     @TokenRequired
     @PutMapping("update")
     public Result updateUser(@RequestBody User user) {
-        userService.updateUser(user);
-        return Results.getSuccessResult(user.getId());
+        User u = userService.selectUserByName(user.getName());
+        if (u == null) {
+            return Results.getNotFoundResult("User does not exist");
+        } else {
+            if (!u.getPassword().equals(user.getPassword())) {
+                return Results.getFailResult("Wrong password, update failed");
+            }
+            else {
+                userService.updateUser(user);
+                return Results.getSuccessResult();
+            }
+        }
     }
 }

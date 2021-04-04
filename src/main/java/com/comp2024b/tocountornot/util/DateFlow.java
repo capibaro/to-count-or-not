@@ -1,13 +1,13 @@
 package com.comp2024b.tocountornot.util;
 
-import com.comp2024b.tocountornot.util.DayStats;
 import lombok.Data;
-
+import com.comp2024b.tocountornot.bean.Bill;
 import java.util.List;
 
 @Data
-public class MonthStats {
+public class DateFlow {
+    private String date;
     private String income;
     private String expense;
-    private List<DayStats> list;
+    private List<Bill> list;
 }

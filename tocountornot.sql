@@ -11,7 +11,7 @@ CREATE TABLE `bill` (
     `month` varchar(10) DEFAULT NULL,
     `week` varchar(10) DEFAULT NULL,
     `type` varchar(10) DEFAULT NULL,
-    `uid` bigint(20) DEFAULT NULL,
+    `uid` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -24,7 +24,7 @@ CREATE TABLE `card` (
     `income` double DEFAULT NULL,
     `expense` double DEFAULT NULL,
     `balance` double DEFAULT NULL,
-    `uid` bigint(20) DEFAULT NULL,
+    `uid` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

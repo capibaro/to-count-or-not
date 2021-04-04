@@ -8,6 +8,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.comp2024b.tocountornot.annotation.NoTokenRequired;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
 import com.comp2024b.tocountornot.bean.User;
+import com.comp2024b.tocountornot.exception.ErrorException;
+import com.comp2024b.tocountornot.exception.UnauthorizedException;
 import com.comp2024b.tocountornot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -43,23 +45,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             TokenRequired tokenRequired = method.getAnnotation(TokenRequired.class);
             if (tokenRequired.required()) {
                 if (token == null) {
-                    throw new RuntimeException("no token found, please login");
+                    throw new UnauthorizedException("no token found, please login");
                 }
                 String name;
                 try {
                     name = JWT.decode(token).getAudience().get(0);
                 } catch (JWTDecodeException j) {
-                    throw new RuntimeException("failed to decode token");
+                    throw new ErrorException("failed to decode token");
                 }
                 User user = userService.selectUserByName(name);
                 if (user == null) {
-                    throw new RuntimeException("User does not exist");
+                    throw new UnauthorizedException("User does not exist");
                 }
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e) {
-                    throw new RuntimeException("fail to verify token");
+                    throw new ErrorException("fail to verify token");
                 }
                 return  true;
             }

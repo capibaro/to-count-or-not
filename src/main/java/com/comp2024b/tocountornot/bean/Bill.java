@@ -15,5 +15,5 @@ public class Bill {
     private String month;
     private String week;
     private String type;
-    private Long uid;
+    private int uid;
 }

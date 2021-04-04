@@ -16,14 +16,6 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public List<User> getAllUser() {
-        return userMapper.getAllUser();
-    }
-
-    public User selectUserById(int id) {
-        return userMapper.selectUserById(id);
-    }
-
     public User selectUserByName(String name) {
         return userMapper.selectUserByName(name);
     }
@@ -40,9 +32,16 @@ public class UserService {
         userMapper.updateUser(user);
     }
 
-    public String getToken(User user) {
+    public String getUserToken(User user) {
         String token;
         token = JWT.create().withAudience(user.getName()).sign(Algorithm.HMAC256(user.getPassword()));
         return token;
+    }
+
+    public int getUserIdWithToken(String token) {
+        String name;
+        name = JWT.decode(token).getAudience().get(0);
+        User user = selectUserByName(name);
+        return user.getId();
     }
 }

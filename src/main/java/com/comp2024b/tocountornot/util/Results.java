@@ -18,4 +18,16 @@ public class Results {
     public static Result getFailResult(String message) {
         return new Result().setCode(Code.FAIL).setMessage(message);
     }
+
+    public static Result getUnauthorizedResult(String message) {
+        return new Result().setCode(Code.UNAUTHORIZED).setMessage(message);
+    }
+
+    public static Result getNotFoundResult(String message) {
+        return new Result().setCode(Code.NOT_FOUND).setMessage(message);
+    }
+
+    public static Result getErrorResult(String message) {
+        return new Result().setCode(Code.INTERNAL_SERVER_ERROR).setMessage(message);
+    }
 }

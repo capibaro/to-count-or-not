@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = UnauthorizedException.class)
     @ResponseBody
-    public Result ExceptionHandler(Exception e) {
-        return Results.getFailResult(e.getMessage());
+    public Result UnauthorizedExceptionHandler(UnauthorizedException ue) {
+        return Results.getUnauthorizedResult(ue.getMessage());
+    }
+
+    @ExceptionHandler(value = ErrorException.class)
+    @ResponseBody
+    public Result ErrorException(ErrorException ee) {
+        return Results.getErrorResult(ee.getMessage());
     }
 }
