@@ -2,9 +2,9 @@ package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.bean.Bill;
 import com.comp2024b.tocountornot.dao.FlowMapper;
-import com.comp2024b.tocountornot.util.DateFlow;
-import com.comp2024b.tocountornot.util.MonthFlow;
-import com.comp2024b.tocountornot.util.WeekFlow;
+import com.comp2024b.tocountornot.util.flow.DateFlow;
+import com.comp2024b.tocountornot.util.flow.MonthFlow;
+import com.comp2024b.tocountornot.util.flow.WeekFlow;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,33 +30,26 @@ public class FlowService {
         return flowMapper.getDateInWeek(uid, year, week);
     }
 
-    public String getIncomeByDate(int uid, String date) {
-        return flowMapper.getIncomeByDate(uid, date);
+    public Double getBalanceByDate(int uid, String date, String type) {
+        Double balance = flowMapper.getBalanceByDate(uid, date, type);
+        return (balance == null) ? 0 : balance;
     }
 
-    public String getExpenseByDate(int uid, String date) { return flowMapper.getExpenseByDate(uid, date); }
-
-    public String getIncomeByWeek(int uid, String year, String week) {
-        return flowMapper.getIncomeByWeek(uid, year, week);
+    public Double getBalanceByWeek(int uid, String year, String week, String type) {
+        Double balance = flowMapper.getBalanceByWeek(uid, year, week, type);
+        return (balance == null) ? 0 : balance;
     }
 
-    public String getExpenseByWeek(int uid, String year, String week) {
-        return flowMapper.getExpenseByWeek(uid, year, week);
-    }
-
-    public String getIncomeByMonth(int uid, String year, String month) {
-        return flowMapper.getIncomeByMonth(uid, year, month);
-    }
-
-    public String getExpenseByMonth(int uid, String year, String month) {
-        return flowMapper.getExpenseByMonth(uid, year, month);
+    public Double getBalanceByMonth(int uid, String year, String month, String type) {
+        Double balance = flowMapper.getBalanceByMonth(uid, year, month, type);
+        return (balance == null) ? 0 : balance;
     }
 
     public DateFlow getDateFlow(int uid, String date) {
         DateFlow dateFlow = new DateFlow();
         dateFlow.setDate(date);
-        dateFlow.setIncome(getIncomeByDate(uid, date));
-        dateFlow.setExpense(getExpenseByDate(uid, date));
+        dateFlow.setIncome(getBalanceByDate(uid, date, "in"));
+        dateFlow.setExpense(getBalanceByDate(uid, date,"out"));
         dateFlow.setList(getBillByDate(uid, date));
         return dateFlow;
     }
@@ -65,8 +58,8 @@ public class FlowService {
         WeekFlow weekFlow = new WeekFlow();
         weekFlow.setYear(year);
         weekFlow.setWeek(week);
-        weekFlow.setIncome(getIncomeByWeek(uid, year, week));
-        weekFlow.setExpense(getExpenseByWeek(uid, year, week));
+        weekFlow.setIncome(getBalanceByWeek(uid, year, week, "in"));
+        weekFlow.setExpense(getBalanceByWeek(uid, year, week, "out"));
         List<DateFlow> list = new ArrayList<>();
         List<String> date_list = getDateInWeek(uid, year, week);
         for (String date : date_list) {
@@ -81,8 +74,8 @@ public class FlowService {
         MonthFlow monthFlow = new MonthFlow();
         monthFlow.setYear(year);
         monthFlow.setMonth(month);
-        monthFlow.setIncome(getIncomeByMonth(uid, year, month));
-        monthFlow.setExpense(getExpenseByMonth(uid, year, month));
+        monthFlow.setIncome(getBalanceByMonth(uid, year, month, "in"));
+        monthFlow.setExpense(getBalanceByMonth(uid, year, month, "out"));
         List<DateFlow> list = new ArrayList<>();
         List<String> date_list = getDateInMonth(uid, year, month);
         for (String date : date_list) {

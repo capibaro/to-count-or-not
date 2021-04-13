@@ -1,7 +1,4 @@
-package com.comp2024b.tocountornot.util;
-
-import com.comp2024b.tocountornot.util.Code;
-import com.comp2024b.tocountornot.util.Result;
+package com.comp2024b.tocountornot.util.result;
 
 public class Results {
     private static final String SUCCESS = "success";

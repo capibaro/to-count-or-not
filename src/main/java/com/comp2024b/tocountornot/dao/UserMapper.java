@@ -2,10 +2,10 @@ package com.comp2024b.tocountornot.dao;
 
 import com.comp2024b.tocountornot.bean.User;
 import org.apache.ibatis.annotations.*;
-
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserMapper {
     @Select("select * from user where name = #{name}")
     User selectUserByName(@Param("name") String name);

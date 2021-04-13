@@ -45,7 +45,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             TokenRequired tokenRequired = method.getAnnotation(TokenRequired.class);
             if (tokenRequired.required()) {
                 if (token == null) {
-                    throw new UnauthorizedException("no token found, please login");
+                    throw new UnauthorizedException("no token found Please login");
                 }
                 String name;
                 try {

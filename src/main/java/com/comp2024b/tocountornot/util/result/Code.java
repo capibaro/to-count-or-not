@@ -1,4 +1,4 @@
-package com.comp2024b.tocountornot.util;
+package com.comp2024b.tocountornot.util.result;
 
 public enum Code {
     SUCCESS(200),

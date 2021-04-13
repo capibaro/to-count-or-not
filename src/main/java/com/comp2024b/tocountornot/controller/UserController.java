@@ -2,8 +2,8 @@ package com.comp2024b.tocountornot.controller;
 
 import com.comp2024b.tocountornot.annotation.NoTokenRequired;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
-import com.comp2024b.tocountornot.util.Result;
-import com.comp2024b.tocountornot.util.Results;
+import com.comp2024b.tocountornot.util.result.Result;
+import com.comp2024b.tocountornot.util.result.Results;
 import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +38,7 @@ public class UserController {
             return Results.getFailResult("User does not exist");
         } else {
             if (!u.getPassword().equals(user.getPassword())) {
-                return Results.getFailResult("Wrong password, login failed");
+                return Results.getFailResult("Wrong password Login failed");
             }
             else {
                 String token = userService.getUserToken(u);
@@ -55,7 +55,7 @@ public class UserController {
             return Results.getNotFoundResult("User does not exist");
         } else {
             if (!u.getPassword().equals(user.getPassword())) {
-                return Results.getFailResult("Wrong password, delete failed");
+                return Results.getFailResult("Wrong password Delete failed");
             }
             else {
                 userService.deleteUser(u.getId());
@@ -72,7 +72,7 @@ public class UserController {
             return Results.getNotFoundResult("User does not exist");
         } else {
             if (!u.getPassword().equals(user.getPassword())) {
-                return Results.getFailResult("Wrong password, update failed");
+                return Results.getFailResult("Wrong password Update failed");
             }
             else {
                 userService.updateUser(user);

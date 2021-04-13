@@ -1,14 +1,12 @@
 package com.comp2024b.tocountornot.controller;
 
 import com.comp2024b.tocountornot.annotation.TokenRequired;
-import com.comp2024b.tocountornot.bean.*;
 import com.comp2024b.tocountornot.service.BillService;
 import com.comp2024b.tocountornot.service.FlowService;
 import com.comp2024b.tocountornot.service.UserService;
-import com.comp2024b.tocountornot.util.*;
+import com.comp2024b.tocountornot.util.result.Result;
+import com.comp2024b.tocountornot.util.result.Results;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("flow")

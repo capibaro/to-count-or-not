@@ -3,8 +3,8 @@ package com.comp2024b.tocountornot.controller;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
 import com.comp2024b.tocountornot.bean.Card;
 import com.comp2024b.tocountornot.service.UserService;
-import com.comp2024b.tocountornot.util.Result;
-import com.comp2024b.tocountornot.util.Results;
+import com.comp2024b.tocountornot.util.result.Result;
+import com.comp2024b.tocountornot.util.result.Results;
 import com.comp2024b.tocountornot.service.CardService;
 import org.springframework.web.bind.annotation.*;
 

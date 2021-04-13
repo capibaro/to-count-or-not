@@ -1,4 +1,4 @@
-package com.comp2024b.tocountornot.util;
+package com.comp2024b.tocountornot.util.flow;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.List;
 public class MonthFlow {
     private String year;
     private String month;
-    private String income;
-    private String expense;
+    private Double income;
+    private Double expense;
     private List<DateFlow> list;
 }

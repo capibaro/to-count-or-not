@@ -2,8 +2,10 @@ package com.comp2024b.tocountornot.dao;
 
 import com.comp2024b.tocountornot.bean.Card;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface CardMapper {
     @Select("select * from card where id=#{id}")
     Card selectCardById(@Param("id") int id);
