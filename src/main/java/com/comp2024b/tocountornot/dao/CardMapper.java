@@ -4,6 +4,8 @@ import com.comp2024b.tocountornot.bean.Card;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface CardMapper {
@@ -20,4 +22,7 @@ public interface CardMapper {
     @Update("update card set name=#{name},note=#{note},image=#{image},income=#{income},expense=#{expense}," +
             "balance=#{balance},uid=#{uid} where id=#{id}")
     void updateCard(Card card);
+
+    @Select("select * from card where uid=#{uid}")
+    List<Card> getAllCardByUid(@Param("uid") int uid);
 }

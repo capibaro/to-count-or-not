@@ -23,9 +23,14 @@ public class CardController {
     @TokenRequired
     @PostMapping("insert")
     public Result insertCard(@RequestHeader("token") String token, @RequestBody Card card) {
-        card.setUid(userService.getUserIdWithToken(token));
-        cardService.insertCard(card);
-        return Results.getSuccessResult(card.getId());
+        int uid = userService.getUserIdWithToken(token);
+        if (cardService.checkDuplicate(uid, card.getName())) {
+            return Results.getFailResult("Card name already taken");
+        } else {
+            card.setUid(uid);
+            cardService.insertCard(card);
+            return Results.getSuccessResult(card.getId());
+        }
     }
 
     @TokenRequired
@@ -68,5 +73,12 @@ public class CardController {
                 return Results.getNotFoundResult("Card does not exist");
             }
         }
+    }
+
+    @TokenRequired
+    @GetMapping("all")
+    public Result getAllCard(@RequestHeader("token") String token) {
+        int uid = userService.getUserIdWithToken(token);
+        return Results.getSuccessResult(cardService.getAllCardByUid(uid));
     }
 }

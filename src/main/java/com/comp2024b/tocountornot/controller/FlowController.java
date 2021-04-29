@@ -44,4 +44,27 @@ public class FlowController {
         int uid = userService.getUserIdWithToken(token);
         return Results.getSuccessResult(flowService.getMonthFlow(uid, year, month));
     }
+
+    @TokenRequired
+    @GetMapping("date/card/{date}/{card}")
+    public Result getDateFlowByCard(@RequestHeader("token") String token, @PathVariable("date") String date, @PathVariable("card") String card) {
+        int uid = userService.getUserIdWithToken(token);
+        return Results.getSuccessResult(flowService.getDateFlowByCard(uid, date, card));
+    }
+
+    @TokenRequired
+    @GetMapping("week/card/{year}/{week}/{card}")
+    public Result getWeekFlowByCard(@RequestHeader("token") String token, @PathVariable("year") String year,
+                              @PathVariable("week") String week, @PathVariable("card") String card) {
+        int uid = userService.getUserIdWithToken(token);
+        return Results.getSuccessResult(flowService.getWeekFlowByCard(uid, year, week, card));
+    }
+
+    @TokenRequired
+    @GetMapping("month/card/{year}/{month}/{card}")
+    public Result getMonthFlowByCard(@RequestHeader("token") String token, @PathVariable("year") String year,
+                               @PathVariable("month") String month, @PathVariable("card") String card) {
+        int uid = userService.getUserIdWithToken(token);
+        return Results.getSuccessResult(flowService.getMonthFlowByCard(uid, year, month, card));
+    }
 }

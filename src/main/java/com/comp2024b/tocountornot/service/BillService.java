@@ -2,7 +2,6 @@ package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.dao.BillMapper;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import com.comp2024b.tocountornot.bean.Bill;
 
 @Service

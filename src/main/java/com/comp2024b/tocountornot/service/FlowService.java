@@ -45,6 +45,33 @@ public class FlowService {
         return (balance == null) ? 0 : balance;
     }
 
+    public List<Bill> getBillByDateCard(int uid, String date, String card) {
+        return flowMapper.getBillByDateCard(uid, date, card);
+    }
+
+    public List<String> getDateInMonthByCard(int uid, String year, String month, String card) {
+        return flowMapper.getDateInMonthByCard(uid, year, month, card);
+    }
+
+    public List<String> getDateInWeekByCard(int uid, String year, String week, String card) {
+        return flowMapper.getDateInWeekByCard(uid, year, week, card);
+    }
+
+    public Double getBalanceByDateCard(int uid, String date, String type, String card) {
+        Double balance = flowMapper.getBalanceByDateCard(uid, date, type, card);
+        return (balance == null) ? 0 : balance;
+    }
+
+    public Double getBalanceByWeekCard(int uid, String year, String week, String type, String card) {
+        Double balance = flowMapper.getBalanceByWeekCard(uid, year, week, type, card);
+        return (balance == null) ? 0 : balance;
+    }
+
+    public Double getBalanceByMonthCard(int uid, String year, String month, String type, String card) {
+        Double balance = flowMapper.getBalanceByMonthCard(uid, year, month, type, card);
+        return (balance == null) ? 0 : balance;
+    }
+
     public DateFlow getDateFlow(int uid, String date) {
         DateFlow dateFlow = new DateFlow();
         dateFlow.setDate(date);
@@ -80,6 +107,47 @@ public class FlowService {
         List<String> date_list = getDateInMonth(uid, year, month);
         for (String date : date_list) {
             DateFlow dateFlow = getDateFlow(uid, date);
+            list.add(dateFlow);
+        }
+        monthFlow.setList(list);
+        return monthFlow;
+    }
+
+    public DateFlow getDateFlowByCard(int uid, String date, String card) {
+        DateFlow dateFlow = new DateFlow();
+        dateFlow.setDate(date);
+        dateFlow.setIncome(getBalanceByDateCard(uid, date, "in", card));
+        dateFlow.setExpense(getBalanceByDateCard(uid, date,"out", card));
+        dateFlow.setList(getBillByDateCard(uid, date, card));
+        return dateFlow;
+    }
+
+    public WeekFlow getWeekFlowByCard(int uid, String year, String week, String card) {
+        WeekFlow weekFlow = new WeekFlow();
+        weekFlow.setYear(year);
+        weekFlow.setWeek(week);
+        weekFlow.setIncome(getBalanceByWeekCard(uid, year, week, "in", card));
+        weekFlow.setExpense(getBalanceByWeekCard(uid, year, week, "out", card));
+        List<DateFlow> list = new ArrayList<>();
+        List<String> date_list = getDateInWeekByCard(uid, year, week, card);
+        for (String date : date_list) {
+            DateFlow dateFlow = getDateFlowByCard(uid, date, card);
+            list.add(dateFlow);
+        }
+        weekFlow.setList(list);
+        return weekFlow;
+    }
+
+    public MonthFlow getMonthFlowByCard(int uid, String year, String month, String card) {
+        MonthFlow monthFlow = new MonthFlow();
+        monthFlow.setYear(year);
+        monthFlow.setMonth(month);
+        monthFlow.setIncome(getBalanceByMonthCard(uid, year, month, "in", card));
+        monthFlow.setExpense(getBalanceByMonthCard(uid, year, month, "out", card));
+        List<DateFlow> list = new ArrayList<>();
+        List<String> date_list = getDateInMonthByCard(uid, year, month, card);
+        for (String date : date_list) {
+            DateFlow dateFlow = getDateFlowByCard(uid, date, card);
             list.add(dateFlow);
         }
         monthFlow.setList(list);

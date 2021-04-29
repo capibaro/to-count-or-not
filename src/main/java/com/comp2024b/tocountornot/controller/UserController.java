@@ -2,6 +2,7 @@ package com.comp2024b.tocountornot.controller;
 
 import com.comp2024b.tocountornot.annotation.NoTokenRequired;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
+import com.comp2024b.tocountornot.service.CardService;
 import com.comp2024b.tocountornot.util.result.Result;
 import com.comp2024b.tocountornot.util.result.Results;
 import com.comp2024b.tocountornot.bean.User;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("user")
 public class UserController {
     private final UserService userService;
+    private final CardService cardService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CardService cardService) {
         this.userService = userService;
+        this.cardService = cardService;
     }
 
     @NoTokenRequired
@@ -26,6 +29,7 @@ public class UserController {
         }
         else {
             userService.insertUser(user);
+            cardService.setDefault(user);
             return Results.getSuccessResult();
         }
     }
@@ -66,15 +70,17 @@ public class UserController {
 
     @TokenRequired
     @PutMapping("update")
-    public Result updateUser(@RequestBody User user) {
+    public Result updateUser(@RequestHeader("token") String token ,@RequestBody User user) {
         User u = userService.selectUserByName(user.getName());
         if (u == null) {
             return Results.getNotFoundResult("User does not exist");
         } else {
-            if (!u.getPassword().equals(user.getPassword())) {
-                return Results.getFailResult("Wrong password Update failed");
+            int uid = userService.getUserIdWithToken(token);
+            if (uid != u.getId()) {
+                return Results.getFailResult("Invalid token Update failed");
             }
             else {
+                user.setId(uid);
                 userService.updateUser(user);
                 return Results.getSuccessResult();
             }

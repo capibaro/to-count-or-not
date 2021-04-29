@@ -2,6 +2,16 @@
 
 ToCountOrNot是安卓记账软件 [爱记不记](https://github.com/ThisisKKya/ToCountOrNotApp) 的后端服务器。
 
+| Dependency | GroupId |
+| ---------- | ------- |
+| spring-boot-starter-web | org.springframework.boot |
+| mybatis-spring-boot-starter | org.mybatis.spring.boot |
+| mysql-connector-java | mysql |
+| spring-boot-starter | org.springframework.boot |
+| spring-boot-starter-test | org.springframework.boot |
+| lombok | org.projectlombok |
+| java-jwt | com.auth0 |
+
 ## 接口
 
 ### User
@@ -83,22 +93,6 @@ ToCountOrNot是安卓记账软件 [爱记不记](https://github.com/ThisisKKya/T
 #### GET stat/first/date/{date}/{type}
 
 按天统计一级分类收入支出
-
-#### GET stat/first/member/year/{year}/{type}/{member}
-
-按年、成员统计一级分类收入支出
-
-#### GET stat/first/member/month/{year}/{month}/{type}/{member}
-
-按月、成员统计一级分类收入支出
-
-#### GET stat/first/member/week/{year}/{week}/{type}/{member}
-
-按周、成员统计一级分类收入支出
-
-#### GET stat/first/member/date/{date}/{type}/{member}
-
-按天、成员统计一级分类收入支出
 
 #### GET stat/second/year/{year}/{type}/{first}
 

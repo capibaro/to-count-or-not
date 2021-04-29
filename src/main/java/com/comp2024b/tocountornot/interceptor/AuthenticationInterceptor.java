@@ -25,8 +25,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     UserService userService;
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) {
-        String token = httpServletRequest.getHeader("token");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
+        String token = request.getHeader("token");
         if (!(object instanceof HandlerMethod)) {
             return true;
         }
@@ -53,6 +53,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 } catch (JWTDecodeException j) {
                     throw new ErrorException("failed to decode token");
                 }
+                request.setAttribute("user", name);
                 User user = userService.selectUserByName(name);
                 if (user == null) {
                     throw new UnauthorizedException("User does not exist");
@@ -71,10 +72,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                           Object o, ModelAndView modelAndView) throws Exception {}
+    public void postHandle(HttpServletRequest request, HttpServletResponse response,
+                           Object o, ModelAndView modelAndView) {}
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                Object o, Exception e) throws Exception {}
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+                                Object o, Exception e) {}
 }

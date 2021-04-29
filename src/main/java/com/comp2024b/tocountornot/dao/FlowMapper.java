@@ -27,4 +27,22 @@ public interface FlowMapper {
 
     @Select("select sum(price) from bill where uid=#{uid} and year=#{year} and month=#{month} and type=#{type} group by uid")
     Double getBalanceByMonth(int uid, String year, String month, String type);
+
+    @Select("select * from bill where uid=#{uid} and date=#{date} and card=#{card}")
+    List<Bill> getBillByDateCard(int uid, String date, String card);
+
+    @Select("select distinct date from bill where uid=#{uid} and year=#{year} and month=#{month} and card=#{card} order by date")
+    List<String> getDateInMonthByCard(int uid, String year, String month, String card);
+
+    @Select("select distinct date from bill where uid=#{uid} and year=#{year} and week=#{week} and card=#{card} order by date")
+    List<String> getDateInWeekByCard(int uid, String year, String week, String card);
+
+    @Select("select sum(price) from bill where uid=#{uid} and date=#{date} and type=#{type} and card=#{card} group by uid")
+    Double getBalanceByDateCard(int uid, String date, String type, String card);
+
+    @Select("select sum(price) from bill where uid=#{uid} and year=#{year} and week=#{week} and type=#{type} and card=#{card} group by uid")
+    Double getBalanceByWeekCard(int uid, String year, String week, String type, String card);
+
+    @Select("select sum(price) from bill where uid=#{uid} and year=#{year} and month=#{month} and type=#{type} and card=#{card} group by uid")
+    Double getBalanceByMonthCard(int uid, String year, String month, String type, String card);
 }
