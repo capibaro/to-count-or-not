@@ -2,7 +2,6 @@ package com.comp2024b.tocountornot.util.result;
 
 public class Results {
     private static final String SUCCESS = "success";
-    private static final String FAIL = "fail";
 
     public static Result getSuccessResult() {
         return new Result().setCode(Code.SUCCESS).setMessage(SUCCESS);

@@ -28,7 +28,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String token = request.getHeader("token");
         if (!(object instanceof HandlerMethod)) {
-            return true;
+            return false;
         }
 
         HandlerMethod handlerMethod = (HandlerMethod) object;
@@ -68,7 +68,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             }
         }
 
-        return true;
+        return false;
     }
 
     @Override

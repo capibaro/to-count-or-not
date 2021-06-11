@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ErrorException.class)
     @ResponseBody
-    public Result ErrorException(ErrorException ee) {
+    public Result ErrorExceptionHandler(ErrorException ee) {
         return Results.getErrorResult(ee.getMessage());
     }
 }

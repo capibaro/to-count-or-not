@@ -9,17 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LogInterceptor implements HandlerInterceptor {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         long startTime = System.currentTimeMillis();
         Date date = new Date();
-        System.out.print(sdf.format(date) + "  ");
-        System.out.print(request.getRemoteAddr() + " ");
-        System.out.print(request.getAttribute("user") + " ");
-        System.out.print(request.getMethod() + " ");
-        System.out.print(request.getRequestURI() + " ");
+        request.setAttribute("date", date);
         request.setAttribute("startTime", startTime);
         return true;
     }
@@ -32,6 +28,12 @@ public class LogInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         long startTime = (Long) request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
+        Date date = (Date) request.getAttribute("date");
+        System.out.print(sdf.format(date) + "  ");
+        System.out.print(request.getRemoteAddr() + " ");
+        System.out.print(request.getAttribute("user") + " ");
+        System.out.print(request.getMethod() + " ");
+        System.out.print(request.getRequestURI() + " ");
         System.out.println("handled in " + (endTime - startTime) + "ms");
     }
 }
