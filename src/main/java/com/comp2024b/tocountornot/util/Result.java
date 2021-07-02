@@ -1,4 +1,4 @@
-package com.comp2024b.tocountornot.util.result;
+package com.comp2024b.tocountornot.util;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;

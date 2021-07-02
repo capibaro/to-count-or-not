@@ -1,127 +1,189 @@
-# ToCountOrNot
+# to-count-or-not
 
-ToCountOrNot是安卓记账软件 [爱记不记](https://github.com/ThisisKKya/ToCountOrNotApp) 的后端服务器。
+to-count-or-not 是安卓记账软件 [爱记不记](https://github.com/ThisisKKya/ToCountOrNotApp) 的后端RESTful Web服务。
+
+## 依赖
 
 | Dependency | GroupId |
 | ---------- | ------- |
 | spring-boot-starter-web | org.springframework.boot |
+| spring-boot-starter-validation | org.springframework.boot |
 | mybatis-spring-boot-starter | org.mybatis.spring.boot |
 | mysql-connector-java | mysql |
-| spring-boot-starter | org.springframework.boot |
-| spring-boot-starter-test | org.springframework.boot |
-| lombok | org.projectlombok |
 | java-jwt | com.auth0 |
+| lombok | org.projectlombok |
 
 ## 接口
 
+完整接口文档参见 [to-count-or-not](https://maotouyingxia.github.io/#to-count-or-not)
+
 ### User
 
-#### POST user/register
+#### 注册
 
-新注册的用户名与密码存入数据库
+##### POST /user/register
 
-#### POST user/login
+#### 登录
 
-发用户名和密码到数据库，检验是否正确
+##### POST /user/login
 
-成功登录，返回token，须附加到后续请求的header中
+#### 修改密码
 
-### Bill
+##### PUT /user
 
-#### POST bill/insert
+#### 删除用户
 
-新建账单
-
-#### GET bill/{id}
-
-通过id查找账单
-
-#### PUT bill/update/{id}
-
-根据id更改账单
-
-#### DEL bill/delete/{id}
-
-根据id删除账单
+##### DELETE /user
 
 ### Card
 
-#### POST card/insert
+#### 新增账户
 
-新建账户
+##### POST /card
 
-#### GET card/{id}
+#### 修改账户
 
-根据id查找账户
+##### PUT /card/{id}
 
-#### PUT card/update/{id}
+#### 删除账户
 
-根据id更新账户
+##### DELETE card/{id}
 
-#### DEL card/delete/{id}
+#### 查找账户
 
-根据id删除账户
+##### GET card/{id}
+
+#### 所有账户
+
+##### GET /cards
+
+### Member
+
+#### 新增成员
+
+##### POST /member
+
+#### 修改成员
+
+##### PUT /member/{id}
+
+#### 删除成员
+
+##### DELETE /member/{id}
+
+#### 查找成员
+
+#####  GET /member/{id}
+
+#### 所有成员
+
+##### GET /members
+
+### Division
+
+#### 新增一级分类
+
+##### POST /division
+
+#### 修改一级分类
+
+###### PUT /division/{id}
+
+#### 删除一级分类
+
+##### DELETE /division/{id}
+
+#### 查找一级分类
+
+##### GET /division/{id}
+
+#### 所有一级分类
+
+##### GET /divisions
+
+### Category
+
+#### 新增二级分类
+
+##### POST /category
+
+#### 修改二级分类
+
+##### PUT /category/{id}
+
+#### 删除二级分类
+
+##### DELETE /category/{id}
+
+#### 查找二级分类
+
+##### GET /category/{id}
+
+#### 所有二级分类
+
+##### GET /categories/{division}
+
+### Bill
+
+#### 新增账单
+
+##### POST /bill
+
+#### 修改账单
+
+##### PUT /bill/{id}
+
+#### 删除账单
+
+##### DELETE /bill/{id}
+
+#### 查找账单
+
+##### GET /bill/{id}
 
 ### Flow
 
-#### GET flow/date/{date}
+#### 月流水
 
-日流水
+##### GET /flow/month/{year}/{month}
 
-##### GET flow/week/{year}/{week}
+#### 日流水
 
-周流水
+##### GET /flow/day/{year}/{month}/{day}
 
-#### GET flow/month/{year}/{month}
+### Income
 
-月流水
+#### 按账户分类统计收入
 
-### Stat
+##### GET /income/cards/{year}/{month}
 
-#### GET stat/first/year/{year}/{type}
+#### 按成员分类统计收入
 
-按年统计一级分类收入支出
+##### GET /income/members/{year}/{month}
 
-#### GET stat/first/month/{year}/{month}/{type}
+#### 按一级分类分类统计收入
 
-按月统计一级分类收入支出
+##### GET /income/divisions/{year}/{month}
 
-#### GET stat/first/week/{year}/{week}/{type}
+#### 按二级分类分类统计收入
 
-按周统计一级分类收入支出
+##### GET /income/categories/{division}/{year}/{month}
 
-#### GET stat/first/date/{date}/{type}
+### Expense
 
-按天统计一级分类收入支出
+#### 按账户分类统计支出
 
-#### GET stat/second/year/{year}/{type}/{first}
+##### GET /expense/cards/{year}/{month}
 
-按年、一级分类统计二级分类收入支出
+#### 按成员分类统计支出
 
-#### GET stat/second/month/{year}/{month}/{type}/{first}
+##### GET /expense/members/{year}/{month}
 
-按月、一级分类统计二级分类收入支出
+#### 按一级分类分类统计支出
 
-#### GET stat/second/week/{year}/{week}/{type}/{first}
+##### GET /expense/divisions/{year}/{month}
 
-按周、一级分类统计二级分类收入支出
+#### 按二级分类分类统计支出
 
-#### GET stat/second/date/{date}/{type}/{first}
+##### GET /expense/categories/{division}/{year}/{month}
 
-按天、一级分类统计二级分类收入支出
-
-#### GET stat/member/year/{year}/{type}
-
-按年、成员统计收入支出
-
-#### GET stat/member/month/{year}/{month}/{type}
-
-按月、成员统计收入支出
-
-#### GET stat/member/week/{year}/{week}/{type}
-
-按周、成员统计收入支出
-
-#### GET stat/member/date/{date}/{type}
-
-按天、成员统计收入支出

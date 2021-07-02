@@ -3,15 +3,16 @@ package com.comp2024b.tocountornot.bean;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 @Data
 @Component
 public class Card {
     private int id;
+    private int user;
+
+    @NotBlank(message = "name cannot be blank")
+    @Size(max=20, message = "name length cannot exceed 20")
     private String name;
-    private String note;
-    private int image;
-    private double income;
-    private double expense;
-    private double balance;
-    private int uid;
 }

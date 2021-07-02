@@ -1,21 +1,20 @@
 package com.comp2024b.tocountornot.interceptor;
 
+import com.comp2024b.tocountornot.ToCountOrNotApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class LogInterceptor implements HandlerInterceptor {
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private static final Logger logger = LoggerFactory.getLogger(ToCountOrNotApplication.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         long startTime = System.currentTimeMillis();
-        Date date = new Date();
-        request.setAttribute("date", date);
         request.setAttribute("startTime", startTime);
         return true;
     }
@@ -26,14 +25,13 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        long startTime = (Long) request.getAttribute("startTime");
+        long startTime = (long) request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
-        Date date = (Date) request.getAttribute("date");
-        System.out.print(sdf.format(date) + "  ");
-        System.out.print(request.getRemoteAddr() + " ");
-        System.out.print(request.getAttribute("user") + " ");
-        System.out.print(request.getMethod() + " ");
-        System.out.print(request.getRequestURI() + " ");
-        System.out.println("handled in " + (endTime - startTime) + "ms");
+        String invokeInfo = request.getRemoteAddr() + " " +
+                request.getAttribute("user") + " " +
+                request.getMethod() + " " +
+                request.getRequestURI() + " " +
+                "handled in " + (endTime - startTime) + "ms";
+        logger.info(invokeInfo);
     }
 }

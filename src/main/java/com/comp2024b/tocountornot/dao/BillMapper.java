@@ -7,18 +7,18 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface BillMapper {
-    @Select("select * from bill where id = #{id}")
-    Bill selectBillById(@Param("id") Long id);
-
-    @Delete("delete from bill where id=#{id}")
-    void deleteBill(@Param("id") Long id);
-
-    @Insert("insert into bill values(#{id},#{first},#{second},#{price},#{card},#{member},#{date},#{year},#{month}," +
-            "#{week},#{type},#{uid})")
-    @Options(useGeneratedKeys = true, keyColumn = "id",keyProperty = "id")
+    @Insert("insert into bill (b_id,c_id,m_id,ca_id,b_price,b_type,b_time) " +
+            "values(#{id},#{card},#{member},#{category},#{price},#{type},#{time})")
+    @Options(useGeneratedKeys = true, keyColumn = "b_id",keyProperty = "id")
     void insertBill(Bill bill);
 
-    @Update("update bill set first=#{first},second=#{second},price=#{price},card=#{card},member=#{member}," +
-            "date=#{date},year=#{year},month=#{month},week=#{week},type=#{type},uid=#{uid} where id = #{id}")
+    @Delete("delete from bill where b_id=#{id}")
+    void deleteBill(@Param("id") Long id);
+
+    @Update("update bill set b_price=#{price},b_type=#{type},b_time=#{time} where b_id=#{id}")
     void updateBill(Bill bill);
+
+    @Select("select b_id as id,bill.c_id as card,m_id as member,ca_id as category,b_price as price,b_type as type," +
+            "b_time as time from bill,card where b_id=#{id} and bill.c_id=card.c_id and card.u_id=#{uid}")
+    Bill getBillById(@Param("id") Long id, @Param("uid") int uid);
 }

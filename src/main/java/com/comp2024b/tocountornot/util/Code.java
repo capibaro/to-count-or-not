@@ -1,13 +1,16 @@
-package com.comp2024b.tocountornot.util.result;
+package com.comp2024b.tocountornot.util;
 
 public enum Code {
     SUCCESS(200),
-    FAIL(400),
+    CREATED(201),
+    BAD_REQUEST(400),
     UNAUTHORIZED(401),
+    FORBIDDEN(403),
     NOT_FOUND(404),
+    CONFLICT(409),
     INTERNAL_SERVER_ERROR(500);
 
-    private int code;
+    private final int code;
 
     Code(int code) {
         this.code = code;

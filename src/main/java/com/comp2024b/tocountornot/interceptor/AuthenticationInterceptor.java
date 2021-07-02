@@ -1,17 +1,11 @@
 package com.comp2024b.tocountornot.interceptor;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.comp2024b.tocountornot.annotation.NoTokenRequired;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
 import com.comp2024b.tocountornot.bean.User;
-import com.comp2024b.tocountornot.exception.ErrorException;
-import com.comp2024b.tocountornot.exception.UnauthorizedException;
+import com.comp2024b.tocountornot.exception.BadRequestException;
 import com.comp2024b.tocountornot.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.comp2024b.tocountornot.util.Token;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,12 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+
+    public AuthenticationInterceptor(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
-        String token = request.getHeader("token");
         if (!(object instanceof HandlerMethod)) {
             return false;
         }
@@ -44,38 +40,27 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         if (method.isAnnotationPresent(TokenRequired.class)) {
             TokenRequired tokenRequired = method.getAnnotation(TokenRequired.class);
             if (tokenRequired.required()) {
+                String token = request.getHeader("Cookie");
                 if (token == null) {
-                    throw new UnauthorizedException("no token found Please login");
+                    throw new BadRequestException("no token found");
                 }
-                String name;
-                try {
-                    name = JWT.decode(token).getAudience().get(0);
-                } catch (JWTDecodeException j) {
-                    throw new ErrorException("failed to decode token");
-                }
+                String name = Token.decode(token);
                 request.setAttribute("user", name);
-                User user = userService.selectUserByName(name);
-                if (user == null) {
-                    throw new UnauthorizedException("User does not exist");
+                if (!userService.ExistUser(name)) {
+                    throw new BadRequestException("invalid token");
                 }
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
-                try {
-                    jwtVerifier.verify(token);
-                } catch (JWTVerificationException e) {
-                    throw new ErrorException("fail to verify token");
-                }
-                return  true;
+                User user = userService.getUserByName(name);
+                request.setAttribute("uid", user.getId());
+                Token.verify(token);
+                return true;
             }
         }
-
         return false;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response,
-                           Object o, ModelAndView modelAndView) {}
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView modelAndView) {}
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-                                Object o, Exception e) {}
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, Exception e) {}
 }

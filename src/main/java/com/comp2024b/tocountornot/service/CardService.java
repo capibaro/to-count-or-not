@@ -1,7 +1,7 @@
 package com.comp2024b.tocountornot.service;
 
-import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.dao.CardMapper;
+import com.comp2024b.tocountornot.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.comp2024b.tocountornot.bean.Card;
@@ -15,49 +15,41 @@ public class CardService {
         this.cardMapper = cardMapper;
     }
 
-    public Card selectCardById(int id) {
-        return cardMapper.selectCardById(id);
-    }
-
-    public void deleteCard(int id) {
-        cardMapper.deleteCard(id);
-    }
-
     public void insertCard(Card card) {
         cardMapper.insertCard(card);
     }
 
-    public void updateCard(Card card) {
-        cardMapper.updateCard(card);
-    }
-
-    public void setDefault(User user) {
-        int uid = user.getId();
-        cardMapper.insertCard(setCard("微信", 2131165474, uid));
-        cardMapper.insertCard(setCard("支付宝", 2131165288, uid));
-        cardMapper.insertCard(setCard("现金", 2131165329, uid));
-    }
-
-    public Card setCard(String name, int image, int uid) {
-        Card card = new Card();
-        card.setName(name);
-        card.setImage(image);
-        card.setUid(uid);
-        return card;
-    }
-
-    public List<Card> getAllCardByUid(int uid) {
-        return cardMapper.getAllCardByUid(uid);
-    }
-
-    public boolean checkDuplicate(int uid, String name) {
-        List<Card> list= getAllCardByUid(uid);
-        if (list == null) return false;
-        for (Card c : list) {
-            if(name.equals(c.getName())) {
-                return true;
-            }
+    public void deleteCard(int id, int uid) {
+        if (ExistCard(id, uid)) {
+            cardMapper.deleteCard(id);
+        } else {
+            throw new NotFoundException("card not found");
         }
-        return false;
+    }
+
+    public void updateCard(Card card, int uid) {
+        if (ExistCard(card.getId(), uid)) {
+            cardMapper.updateCard(card);
+        } else {
+            throw new NotFoundException("card not found");
+        }
+    }
+
+    public Card getCardById(int id, int uid) {
+        Card card = cardMapper.getCardById(id, uid);
+        if (card != null) {
+            return card;
+        } else {
+            throw new NotFoundException("card not found");
+        }
+    }
+
+    public List<Card> getAllCard(int uid) {
+        return cardMapper.getAllCard(uid);
+    }
+
+    public boolean ExistCard(int id, int uid) {
+        Card card = getCardById(id, uid);
+        return card != null;
     }
 }

@@ -9,20 +9,19 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CardMapper {
-    @Select("select * from card where id=#{id}")
-    Card selectCardById(@Param("id") int id);
-
-    @Delete("DELETE from card where id=#{id}")
-    void deleteCard(@Param("id") int id);
-
-    @Insert("insert into card values(#{id},#{name},#{note},#{image},#{income},#{expense},#{balance},#{uid})")
-    @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
+    @Insert("insert into card (c_id,u_id,c_name) values (#{id},#{user},#{name})")
+    @Options(useGeneratedKeys = true, keyColumn = "c_id", keyProperty = "id")
     void insertCard(Card card);
 
-    @Update("update card set name=#{name},note=#{note},image=#{image},income=#{income},expense=#{expense}," +
-            "balance=#{balance},uid=#{uid} where id=#{id}")
+    @Delete("delete from card where c_id=#{id}")
+    void deleteCard(@Param("id") int id);
+
+    @Update("update card set c_name=#{name} where c_id=#{id}")
     void updateCard(Card card);
 
-    @Select("select * from card where uid=#{uid}")
-    List<Card> getAllCardByUid(@Param("uid") int uid);
+    @Select("select c_id as id,c_name as name from card where u_id=#{uid}")
+    List<Card> getAllCard(@Param("uid") int uid);
+
+    @Select("select c_id as id,c_name as name from card where c_id=#{id} and u_id=#{uid}")
+    Card getCardById(@Param("id") int id, @Param("uid") int uid);
 }
