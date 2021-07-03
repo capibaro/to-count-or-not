@@ -1,5 +1,6 @@
 package com.comp2024b.tocountornot.dao;
 
+import com.comp2024b.tocountornot.bean.Bill;
 import com.comp2024b.tocountornot.bean.Category;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,8 @@ public interface CategoryMapper {
     @Select("select ca_id as id,category.d_id as division,ca_name as name from category,division where ca_id=#{id} and " +
             "category.d_id=division.d_id and division.u_id=#{uid}")
     Category getCategoryById(@Param("id") int id, @Param("uid") int uid);
+
+    @Select("select b_id as id,c_id as card,m_id as member,ca_id as category,b_price as price,b_type as type, " +
+            "b_time as time from bill where ca_id=#{id}")
+    List<Bill> getBillByCategory(@Param("id") int id);
 }

@@ -13,7 +13,7 @@ public class Category {
     private int id;
 
     @NotNull(message = "division cannot be null")
-    private Integer division;
+    private int division;
 
     @NotBlank(message = "name cannot be blank")
     @Size(max = 10, message = "name length cannot exceed 10")

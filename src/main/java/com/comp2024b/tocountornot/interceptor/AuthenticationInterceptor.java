@@ -4,6 +4,7 @@ import com.comp2024b.tocountornot.annotation.NoTokenRequired;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
 import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.exception.BadRequestException;
+import com.comp2024b.tocountornot.exception.NotFoundException;
 import com.comp2024b.tocountornot.service.UserService;
 import com.comp2024b.tocountornot.util.Token;
 import org.springframework.web.method.HandlerMethod;
@@ -24,7 +25,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         if (!(object instanceof HandlerMethod)) {
-            return false;
+            return true;
         }
 
         HandlerMethod handlerMethod = (HandlerMethod) object;
@@ -55,7 +56,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        return false;
+        throw new NotFoundException("method not found");
     }
 
     @Override

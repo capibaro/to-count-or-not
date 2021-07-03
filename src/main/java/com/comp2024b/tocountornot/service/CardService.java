@@ -1,6 +1,8 @@
 package com.comp2024b.tocountornot.service;
 
+import com.comp2024b.tocountornot.bean.Bill;
 import com.comp2024b.tocountornot.dao.CardMapper;
+import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,7 +23,11 @@ public class CardService {
 
     public void deleteCard(int id, int uid) {
         if (ExistCard(id, uid)) {
-            cardMapper.deleteCard(id);
+            if (!ExistBill(id)) {
+                cardMapper.deleteCard(id);
+            } else {
+                throw new ForbiddenException("cannot delete card cause there is at least a bill under it");
+            }
         } else {
             throw new NotFoundException("card not found");
         }
@@ -51,5 +57,10 @@ public class CardService {
     public boolean ExistCard(int id, int uid) {
         Card card = getCardById(id, uid);
         return card != null;
+    }
+
+    public boolean ExistBill(int id) {
+        List<Bill> list = cardMapper.getBillByCard(id);
+        return list != null;
     }
 }

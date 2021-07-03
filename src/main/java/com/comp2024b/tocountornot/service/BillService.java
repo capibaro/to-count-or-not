@@ -1,6 +1,7 @@
 package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.dao.BillMapper;
+import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import com.comp2024b.tocountornot.bean.Bill;
@@ -27,7 +28,13 @@ public class BillService {
 
     public void updateBill(Bill bill, int uid) {
         if (ExistBill(bill.getId(), uid)) {
-            billMapper.updateBill(bill);
+            Bill b = getBillById(bill.getId(), uid);
+            if (b.getCard() == bill.getCard() && b.getCategory() == bill.getCategory()
+                    && b.getMember() == bill.getMember()) {
+                billMapper.updateBill(bill);
+            } else {
+                throw new ForbiddenException("cannot modify card member or category");
+            }
         } else {
             throw new NotFoundException("bill not found");
         }

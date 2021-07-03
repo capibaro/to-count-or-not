@@ -1,7 +1,9 @@
 package com.comp2024b.tocountornot.service;
 
+import com.comp2024b.tocountornot.bean.Category;
 import com.comp2024b.tocountornot.bean.Division;
 import com.comp2024b.tocountornot.dao.DivisionMapper;
+import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,11 @@ public class DivisionService {
 
     public void deleteDivision(int id, int uid) {
         if (ExistDivision(id, uid)) {
-            divisionMapper.deleteDivision(id);
+            if (!ExistCategory(id)) {
+                divisionMapper.deleteDivision(id);
+            } else {
+                throw new ForbiddenException("cannot delete division cause there is at least a category under it");
+            }
         } else {
             throw new NotFoundException("division not found");
         }
@@ -51,5 +57,10 @@ public class DivisionService {
     public boolean ExistDivision(int id, int uid) {
         Division division = getDivisionById(id, uid);
         return division != null;
+    }
+
+    public boolean ExistCategory(int id) {
+        List<Category> list = divisionMapper.getCategoryByDivision(id);
+        return list != null;
     }
 }

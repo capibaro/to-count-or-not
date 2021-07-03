@@ -14,13 +14,13 @@ public class Bill {
     private long id;
 
     @NotNull(message = "card cannot be null")
-    private Integer card;
+    private int card;
 
     @NotNull(message = "member cannot be null")
-    private Integer member;
+    private int member;
 
     @NotNull(message = "category cannot be null")
-    private Integer category;
+    private int category;
 
     @NotNull(message = "price cannot be null")
     @Digits(integer = 9, fraction = 2, message = "price should have no more than 9 integer digits or 2 decimal digits")
@@ -29,7 +29,7 @@ public class Bill {
 
     @NotNull(message = "type cannot be null")
     @Range(min=0, max=2,message = "type should be 0(income) 1(expense) or 2(transfer)")
-    private Integer type;
+    private int type;
 
     @NotNull(message = "time cannot be null")
     @Past(message = "time cannot be a future time")

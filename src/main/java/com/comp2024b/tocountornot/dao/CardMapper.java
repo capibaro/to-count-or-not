@@ -1,5 +1,6 @@
 package com.comp2024b.tocountornot.dao;
 
+import com.comp2024b.tocountornot.bean.Bill;
 import com.comp2024b.tocountornot.bean.Card;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,8 @@ public interface CardMapper {
 
     @Select("select c_id as id,c_name as name from card where c_id=#{id} and u_id=#{uid}")
     Card getCardById(@Param("id") int id, @Param("uid") int uid);
+
+    @Select("select b_id as id,c_id as card,m_id as member,ca_id as category,b_price as price,b_type as type, " +
+            "b_time as time from bill where c_id=#{id}")
+    List<Bill> getBillByCard(@Param("id") int id);
 }

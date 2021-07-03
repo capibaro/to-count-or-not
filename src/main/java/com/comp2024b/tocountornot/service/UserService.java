@@ -49,10 +49,15 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        String salt = Salt.getSalt();
-        user.setPassword(Digest.hash(user.getPassword(),salt));
-        user.setSalt(salt);
-        userMapper.updateUser(user);
+        User u = getUserById(user.getId());
+        if (u.getName().equals(user.getName())) {
+            String salt = Salt.getSalt();
+            user.setPassword(Digest.hash(user.getPassword(),salt));
+            user.setSalt(salt);
+            userMapper.updateUser(user);
+        } else {
+            throw new ForbiddenException("cannot modify username");
+        }
     }
 
     public User getUserByName(String name) {
@@ -62,6 +67,10 @@ public class UserService {
         } else {
             throw new NotFoundException("user not exist");
         }
+    }
+
+    public User getUserById(int id) {
+        return userMapper.getUserById(id);
     }
 
     public boolean ExistUser(String name) {

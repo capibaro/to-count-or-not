@@ -1,6 +1,6 @@
 # to-count-or-not
 
-to-count-or-not 是安卓记账软件 [爱记不记](https://github.com/ThisisKKya/ToCountOrNotApp) 的后端RESTful Web服务。
+to-count-or-not 是安卓记账软件爱记不记的后端RESTful Web服务。
 
 ## 依赖
 
@@ -186,4 +186,3 @@ to-count-or-not 是安卓记账软件 [爱记不记](https://github.com/ThisisKK
 #### 按二级分类分类统计支出
 
 ##### GET /expense/categories/{division}/{year}/{month}
-

@@ -1,5 +1,6 @@
 package com.comp2024b.tocountornot.dao;
 
+import com.comp2024b.tocountornot.bean.Category;
 import com.comp2024b.tocountornot.bean.Division;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,7 @@ public interface DivisionMapper {
 
     @Select("select d_id as id,d_name as name from division where d_id=#{id} and u_id=#{uid}")
     Division getDivisionById(@Param("id") int id, @Param("uid") int uid);
+
+    @Select("select ca_id as id,d_id as division,ca_name as name from category where d_id=#{id}")
+    List<Category> getCategoryByDivision(@Param("id") int id);
 }
