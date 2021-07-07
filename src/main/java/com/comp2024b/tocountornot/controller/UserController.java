@@ -6,14 +6,12 @@ import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.service.UserService;
 import com.comp2024b.tocountornot.util.Result;
 import com.comp2024b.tocountornot.util.ResultFactory;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@Validated
 public class UserController {
     private final UserService userService;
 

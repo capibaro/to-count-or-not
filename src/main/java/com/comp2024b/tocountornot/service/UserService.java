@@ -35,7 +35,7 @@ public class UserService {
             String salt = u.getSalt();
             String hash = Digest.hash(user.getPassword(),salt);
             if (hash.equals(u.getPassword())) {
-                return Token.create(user.getName());
+                return Token.create(String.valueOf(u.getId()));
             } else {
                 throw new ForbiddenException("wrong password");
             }

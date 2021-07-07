@@ -5,14 +5,12 @@ import com.comp2024b.tocountornot.bean.Card;
 import com.comp2024b.tocountornot.service.CardService;
 import com.comp2024b.tocountornot.util.Result;
 import com.comp2024b.tocountornot.util.ResultFactory;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Validated
 public class CardController {
 
     private final CardService cardService;

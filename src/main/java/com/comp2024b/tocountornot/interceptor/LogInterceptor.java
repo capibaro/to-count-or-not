@@ -28,7 +28,6 @@ public class LogInterceptor implements HandlerInterceptor {
         long startTime = (long) request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
         String invokeInfo = request.getRemoteAddr() + " " +
-                request.getAttribute("user") + " " +
                 request.getMethod() + " " +
                 request.getRequestURI() + " " +
                 "handled in " + (endTime - startTime) + "ms";

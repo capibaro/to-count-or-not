@@ -2,10 +2,8 @@ package com.comp2024b.tocountornot.interceptor;
 
 import com.comp2024b.tocountornot.annotation.NoTokenRequired;
 import com.comp2024b.tocountornot.annotation.TokenRequired;
-import com.comp2024b.tocountornot.bean.User;
 import com.comp2024b.tocountornot.exception.BadRequestException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
-import com.comp2024b.tocountornot.service.UserService;
 import com.comp2024b.tocountornot.util.Token;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,12 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
-    private final UserService userService;
-
-    public AuthenticationInterceptor(UserService userService) {
-        this.userService = userService;
-    }
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         if (!(object instanceof HandlerMethod)) {
@@ -45,14 +37,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 if (token == null) {
                     throw new BadRequestException("no token found");
                 }
-                String name = Token.decode(token);
-                request.setAttribute("user", name);
-                if (!userService.ExistUser(name)) {
-                    throw new BadRequestException("invalid token");
-                }
-                User user = userService.getUserByName(name);
-                request.setAttribute("uid", user.getId());
                 Token.verify(token);
+                int uid = Integer.parseInt(Token.decode(token));
+                request.setAttribute("uid", uid);
                 return true;
             }
         }

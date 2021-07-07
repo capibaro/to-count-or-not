@@ -15,7 +15,7 @@ to-count-or-not 是安卓记账软件爱记不记的后端RESTful Web服务。
 
 ## 接口
 
-完整接口文档参见 [to-count-or-not](https://maotouyingxia.github.io/#to-count-or-not)
+完整接口文档参见 [to-count-or-not](https://maotouyingxia.github.io//tocountornot//docs)
 
 ### User
 

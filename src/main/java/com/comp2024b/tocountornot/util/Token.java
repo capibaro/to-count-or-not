@@ -12,23 +12,23 @@ import java.util.Calendar;
 public class Token {
     private static final String secret = System.getenv("SECRET");
 
-    public static String create(String name) {
+    public static String create(String payload) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
         return JWT.create()
-                .withAudience(name)
+                .withAudience(payload)
                 .withExpiresAt(calendar.getTime())
                 .sign(Algorithm.HMAC256(secret));
     }
 
     public static String decode(String token) {
-        String name;
+        String payload;
         try {
-            name = JWT.decode(token).getAudience().get(0);
+            payload = JWT.decode(token).getAudience().get(0);
         } catch (JWTDecodeException jde) {
             throw new BadRequestException("invalid token");
         }
-        return name;
+        return payload;
     }
 
     public static void verify(String token) {

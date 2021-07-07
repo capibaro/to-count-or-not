@@ -5,14 +5,12 @@ import com.comp2024b.tocountornot.bean.Member;
 import com.comp2024b.tocountornot.service.MemberService;
 import com.comp2024b.tocountornot.util.Result;
 import com.comp2024b.tocountornot.util.ResultFactory;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Validated
 public class MemberController {
 
     private final MemberService memberService;

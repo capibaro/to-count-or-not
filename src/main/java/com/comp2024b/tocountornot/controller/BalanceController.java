@@ -8,15 +8,11 @@ import com.comp2024b.tocountornot.util.Period;
 import com.comp2024b.tocountornot.util.PeriodFactory;
 import com.comp2024b.tocountornot.util.Result;
 import com.comp2024b.tocountornot.util.ResultFactory;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@Validated
 public class BalanceController {
     private final BalanceService balanceService;
     private final DivisionService divisionService;
@@ -52,8 +48,7 @@ public class BalanceController {
 
     @TokenRequired
     @GetMapping("income/categories/{division}/{year}/{month}")
-    public Result getCategoryIncome(@RequestAttribute("uid") int uid,
-                                     @Valid @PathVariable("division") @NotNull(message = "division cannot be null") int division,
+    public Result getCategoryIncome(@RequestAttribute("uid") int uid, @PathVariable("division") int division,
                                      @PathVariable("year") int year, @PathVariable("month") int month) {
         List<Balance> balances = null;
         if (divisionService.ExistDivision(division, uid)) {
@@ -89,8 +84,7 @@ public class BalanceController {
 
     @TokenRequired
     @GetMapping("expense/categories/{division}/{year}/{month}")
-    public Result getCategoryExpense(@RequestAttribute("uid") int uid,
-                                     @Valid @PathVariable("division") @NotNull(message = "division cannot be null") int division,
+    public Result getCategoryExpense(@RequestAttribute("uid") int uid, @PathVariable("division") int division,
                                      @PathVariable("year") int year, @PathVariable("month") int month) {
         List<Balance> balances = null;
         if (divisionService.ExistDivision(division, uid)) {

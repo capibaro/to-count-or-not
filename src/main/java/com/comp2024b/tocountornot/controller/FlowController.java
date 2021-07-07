@@ -7,11 +7,9 @@ import com.comp2024b.tocountornot.util.Period;
 import com.comp2024b.tocountornot.util.PeriodFactory;
 import com.comp2024b.tocountornot.util.Result;
 import com.comp2024b.tocountornot.util.ResultFactory;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Validated
 public class FlowController {
     
     private final FlowService flowService;
