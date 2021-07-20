@@ -2,6 +2,7 @@ package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.bean.Category;
 import com.comp2024b.tocountornot.bean.Division;
+import com.comp2024b.tocountornot.dao.CategoryMapper;
 import com.comp2024b.tocountornot.dao.DivisionMapper;
 import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
@@ -12,9 +13,11 @@ import java.util.List;
 @Service
 public class DivisionService {
     private final DivisionMapper divisionMapper;
+    private final CategoryMapper categoryMapper;
 
-    public DivisionService(DivisionMapper divisionMapper) {
+    public DivisionService(DivisionMapper divisionMapper, CategoryMapper categoryMapper) {
         this.divisionMapper = divisionMapper;
+        this.categoryMapper = categoryMapper;
     }
 
     public void insertDivision(Division division) {
@@ -23,7 +26,7 @@ public class DivisionService {
 
     public void deleteDivision(int id, int uid) {
         if (ExistDivision(id, uid)) {
-            if (!ExistCategory(id)) {
+            if (!ExistCategory(id, uid)) {
                 divisionMapper.deleteDivision(id);
             } else {
                 throw new ForbiddenException("cannot delete division cause there is at least a category under it");
@@ -59,8 +62,8 @@ public class DivisionService {
         return division != null;
     }
 
-    public boolean ExistCategory(int id) {
-        List<Category> list = divisionMapper.getCategoryByDivision(id);
+    public boolean ExistCategory(int id, int uid) {
+        List<Category> list = categoryMapper.getCategoriesByDivision(id, uid);
         return list != null;
     }
 }

@@ -10,8 +10,6 @@ import java.sql.Timestamp;
 @Component
 public class Detail {
     private int id;
-    private String card;
-    private String member;
     private String category;
     private String division;
     private BigDecimal price;

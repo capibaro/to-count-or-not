@@ -1,5 +1,6 @@
 package com.comp2024b.tocountornot.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,8 @@ import javax.validation.constraints.Size;
 @Component
 public class Division {
     private int id;
+
+    @JsonIgnore
     private int user;
 
     @NotBlank(message = "name cannot be blank")

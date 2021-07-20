@@ -1,6 +1,7 @@
 package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.bean.Bill;
+import com.comp2024b.tocountornot.dao.BillMapper;
 import com.comp2024b.tocountornot.dao.CardMapper;
 import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
@@ -12,9 +13,11 @@ import com.comp2024b.tocountornot.bean.Card;
 public class CardService {
 
     private final CardMapper cardMapper;
+    private final BillMapper billMapper;
 
-    public CardService(CardMapper cardMapper) {
+    public CardService(CardMapper cardMapper, BillMapper billMapper) {
         this.cardMapper = cardMapper;
+        this.billMapper = billMapper;
     }
 
     public void insertCard(Card card) {
@@ -60,7 +63,7 @@ public class CardService {
     }
 
     public boolean ExistBill(int id) {
-        List<Bill> list = cardMapper.getBillByCard(id);
-        return list != null;
+        Bill bill = billMapper.getBillByCard(id);
+        return bill != null;
     }
 }

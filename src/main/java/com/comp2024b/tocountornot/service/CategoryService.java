@@ -2,6 +2,7 @@ package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.bean.Bill;
 import com.comp2024b.tocountornot.bean.Category;
+import com.comp2024b.tocountornot.dao.BillMapper;
 import com.comp2024b.tocountornot.dao.CategoryMapper;
 import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
@@ -12,9 +13,11 @@ import java.util.List;
 @Service
 public class CategoryService {
     private final CategoryMapper categoryMapper;
+    private final BillMapper billMapper;
 
-    public CategoryService(CategoryMapper categoryMapper) {
+    public CategoryService(CategoryMapper categoryMapper, BillMapper billMapper) {
         this.categoryMapper = categoryMapper;
+        this.billMapper = billMapper;
     }
 
     public void insertCategory(Category category) {
@@ -56,7 +59,7 @@ public class CategoryService {
     }
 
     public List<Category> getCategoryByDivision(int did, int uid) {
-        return categoryMapper.getCategoryByDivision(did, uid);
+        return categoryMapper.getCategoriesByDivision(did, uid);
     }
 
     public boolean ExistCategory(int id, int uid) {
@@ -65,7 +68,7 @@ public class CategoryService {
     }
 
     public boolean ExistBill(int id) {
-        List<Bill> list = categoryMapper.getBillByCategory(id);
-        return list != null;
+        Bill bill = billMapper.getBillByCategory(id);
+        return bill != null;
     }
 }

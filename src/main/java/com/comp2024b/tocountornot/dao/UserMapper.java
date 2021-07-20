@@ -17,9 +17,9 @@ public interface UserMapper {
     @Update("update usr set u_password=#{password},u_salt=#{salt} where u_id=#{id}")
     void updateUser(User user);
 
-    @Select("select u_id as id,u_name as name,u_password as password,u_salt as salt from usr where u_name=#{name}")
-    User getUserByName(@Param("name") String name);
-
     @Select("select u_id as id,u_name as name,u_password as password,u_salt as salt from usr where u_id=#{id}")
     User getUserById(@Param("id") int id);
+
+    @Select("select u_id as id,u_name as name,u_password as password,u_salt as salt from usr where u_name=#{name}")
+    User getUserByName(@Param("name") String name);
 }

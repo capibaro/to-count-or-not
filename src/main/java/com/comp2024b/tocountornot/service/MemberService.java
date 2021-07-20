@@ -2,6 +2,7 @@ package com.comp2024b.tocountornot.service;
 
 import com.comp2024b.tocountornot.bean.Bill;
 import com.comp2024b.tocountornot.bean.Member;
+import com.comp2024b.tocountornot.dao.BillMapper;
 import com.comp2024b.tocountornot.dao.MemberMapper;
 import com.comp2024b.tocountornot.exception.ForbiddenException;
 import com.comp2024b.tocountornot.exception.NotFoundException;
@@ -12,9 +13,11 @@ import java.util.List;
 @Service
 public class MemberService {
     private final MemberMapper memberMapper;
+    private final BillMapper billMapper;
 
-    public MemberService(MemberMapper memberMapper) {
-        this.memberMapper=memberMapper;
+    public MemberService(MemberMapper memberMapper, BillMapper billMapper) {
+        this.memberMapper = memberMapper;
+        this.billMapper = billMapper;
     }
 
     public void insertMember(Member member) {
@@ -60,7 +63,7 @@ public class MemberService {
     }
 
     public boolean ExistBill(int id) {
-        List<Bill> list = memberMapper.getBillByMember(id);
-        return list != null;
+        Bill bill = billMapper.getBillByMember(id);
+        return bill != null;
     }
 }
