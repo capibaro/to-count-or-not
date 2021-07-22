@@ -24,4 +24,7 @@ public interface CardMapper {
 
     @Select("select c_id as id,c_name as name from card where u_id=#{uid}")
     List<Card> getAllCard(@Param("uid") int uid);
+
+    @Select("select c_id as id,c_name as name from card where u_id=#{id} limit 1")
+    Card getCardByUser(@Param("id") int id);
 }

@@ -24,4 +24,7 @@ public interface MemberMapper {
 
     @Select("select m_id as id,m_name as name from member where u_id=#{uid}")
     List<Member> getAllMember(@Param("uid") int uid);
+
+    @Select("select m_id as id,m_name as name from member where u_id=#{id} limit 1")
+    Member getMemberByUser(@Param("id") int id);
 }

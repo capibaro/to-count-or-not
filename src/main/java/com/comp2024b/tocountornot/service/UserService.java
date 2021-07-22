@@ -1,6 +1,12 @@
 package com.comp2024b.tocountornot.service;
 
+import com.comp2024b.tocountornot.bean.Card;
+import com.comp2024b.tocountornot.bean.Division;
+import com.comp2024b.tocountornot.bean.Member;
 import com.comp2024b.tocountornot.bean.User;
+import com.comp2024b.tocountornot.dao.CardMapper;
+import com.comp2024b.tocountornot.dao.DivisionMapper;
+import com.comp2024b.tocountornot.dao.MemberMapper;
 import com.comp2024b.tocountornot.dao.UserMapper;
 import com.comp2024b.tocountornot.exception.ConflictException;
 import com.comp2024b.tocountornot.exception.ForbiddenException;
@@ -13,9 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserMapper userMapper;
+    private final CardMapper cardMapper;
+    private final MemberMapper memberMapper;
+    private final DivisionMapper divisionMapper;
 
-    public UserService(UserMapper userMapper) {
+    public UserService(UserMapper userMapper, CardMapper cardMapper, MemberMapper memberMapper, DivisionMapper divisionMapper) {
         this.userMapper = userMapper;
+        this.cardMapper = cardMapper;
+        this.memberMapper = memberMapper;
+        this.divisionMapper = divisionMapper;
     }
 
     public void register(User user) {
@@ -45,7 +57,15 @@ public class UserService {
     }
 
     public void deleteUser(int id) {
-        userMapper.deleteUser(id);
+        if (ExistCard(id)) {
+            throw new ForbiddenException("cannot delete user cause there is at least a card under it");
+        } else if (ExistMember(id)) {
+            throw new ForbiddenException("cannot delete user cause there is at least a member under it");
+        } else if (ExistDivision(id)) {
+            throw new ForbiddenException("cannot delete user cause there is at least a division under it");
+        } else {
+            userMapper.deleteUser(id);
+        }
     }
 
     public void updateUser(User user) {
@@ -76,5 +96,20 @@ public class UserService {
     public boolean ExistUser(String name) {
         User user = userMapper.getUserByName(name);
         return user != null;
+    }
+
+    public boolean ExistCard(int id) {
+        Card card = cardMapper.getCardByUser(id);
+        return card != null;
+    }
+
+    public boolean ExistMember(int id) {
+        Member member = memberMapper.getMemberByUser(id);
+        return member != null;
+    }
+
+    public boolean ExistDivision(int id) {
+        Division division = divisionMapper.getDivisionByUser(id);
+        return division != null;
     }
 }

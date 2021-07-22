@@ -24,4 +24,7 @@ public interface DivisionMapper {
 
     @Select("select d_id as id,d_name as name from division where u_id=#{uid}")
     List<Division> getAllDivision(@Param("uid") int uid);
+
+    @Select("select d_id as id,d_name as name from division where u_id=#{id} limit 1")
+    Division getDivisionByUser(@Param("id") int id);
 }
