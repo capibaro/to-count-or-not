@@ -24,8 +24,6 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 注销 | DELETE | user |
 | 修改密码 | PUT | user |
 
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-user)
-
 ### 账户
 
 | Action | Method | URI |
@@ -35,8 +33,6 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 修改 | PUT | card/{id} |
 | 查找 | GET | card/{id} |
 | 全部 | GET | cards |
-
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-card)
 
 ### 成员
 
@@ -48,8 +44,6 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 查找 | GET | member/{id} |
 | 全部 | GET | members |
 
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-member)
-
 ### 一级分类
 
 | Action | Method | URI |
@@ -59,8 +53,6 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 修改 | PUT | division/{id} |
 | 查找 | GET | division/{id} |
 | 全部 | GET | divisions |
-
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-division)
 
 ### 二级分类
 
@@ -72,8 +64,6 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 查找 | GET | category/{id} |
 | 全部 | GET | categories/{division} |
 
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-category)
-
 ### 账单
 
 | Action | Method | URI |
@@ -83,16 +73,12 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 修改 | PUT | bill/{id} |
 | 查找 | GET | bill/{id} |
 
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-bill)
-
 ### 流水
 
 | Action | Method | URI |
 | --- | --- | --- |
 | 月流水 | GET | flow/month/{year}/{month} |
 | 日流水 | GET | flow/day/{year}/{month}/{day} |
-
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-flow)
 
 ### 收入
 
@@ -103,8 +89,6 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 按一级分类统计 | GET | income/divisions/{year}/{month} |
 | 按二级分类统计 | GET | income/categories/{division}/{year}/{month} |
 
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-balance)
-
 ### 支出
 
 | Action | Method | URI |
@@ -114,4 +98,13 @@ to-count-or-not 是安卓记账软件爱记不记的后端 RESTful Web 服务。
 | 按一级分类统计 | GET | expense/divisions/{year}/{month} |
 | 按二级分类统计 | GET | expense/categories/{division}/{year}/{month} |
 
-[接口文档](https://capibaro.github.io/2021/05/03/tocountornot-balance)
+## 文档
+
+- [用户](https://github.com/capibaro/to-count-or-not/blob/master/docs/user.md)
+- [账户](https://github.com/capibaro/to-count-or-not/blob/master/docs/card.md)
+- [成员](https://github.com/capibaro/to-count-or-not/blob/master/docs/member.md)
+- [一级分类](https://github.com/capibaro/to-count-or-not/blob/master/docs/division.md)
+- [二级分类](https://github.com/capibaro/to-count-or-not/blob/master/docs/category.md)
+- [账单](https://github.com/capibaro/to-count-or-not/blob/master/docs/bill.md)
+- [流水](https://github.com/capibaro/to-count-or-not/blob/master/docs/flow.md)
+- [收支](https://github.com/capibaro/to-count-or-not/blob/master/docs/balance.md)
